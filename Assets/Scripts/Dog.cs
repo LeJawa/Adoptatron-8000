@@ -20,9 +20,9 @@ namespace SparuvianConnection.Adoptatron
             _dictionaryOfSkills.Add(SkillName.Come, new Come());
         }
 
-        public void UpdateSkill(Skill skill)
+        public void UpdateSkill(Skill skill, int comboMultiplier)
         {
-            _dictionaryOfSkills[skill.Name].IncreaseMasteryByAmount(skill.Mastery);
+            _dictionaryOfSkills[skill.Name].IncreaseMasteryByAmount(skill.Mastery * comboMultiplier);
         }
 
         public int GetMasteryOfSkill(SkillName skill)
