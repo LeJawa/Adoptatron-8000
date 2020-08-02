@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using SparuvianConnection.Adoptatron.Gameplay.Skills;
-using UnityEngine;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {

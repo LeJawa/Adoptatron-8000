@@ -1,9 +1,7 @@
-﻿using System;
-using SparuvianConnection.Adoptatron.Gameplay;
+﻿using SparuvianConnection.Adoptatron.Gameplay;
 using SparuvianConnection.Adoptatron.Gameplay.Skills;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace SparuvianConnection.Adoptatron.GUI

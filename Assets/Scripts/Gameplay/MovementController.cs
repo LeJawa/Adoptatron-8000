@@ -1,6 +1,4 @@
-﻿using System;
-using SparuvianConnection.Adoptatron.Utils;
-using Unity.Mathematics;
+﻿using SparuvianConnection.Adoptatron.Utils;
 using UnityEngine;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
@@ -20,9 +18,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private LineRenderer _trajectory;
 
         private PlayerMarble _playerMarble;
-
-
-        // Start is called before the first frame update
+        
         private void Start()
         {
             _cameraMain = Camera.main;
@@ -30,8 +26,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             _playerMarble = GameObject.FindWithTag("Player").GetComponent<PlayerMarble>();
             _trajectory = GameObject.FindWithTag("Player").GetComponent<LineRenderer>();
         }
-
-        // Update is called once per frame
+        
         private void Update()
         {
             if (!_startingToPull)
@@ -55,7 +50,6 @@ namespace SparuvianConnection.Adoptatron.Gameplay
                 }
             }
         }
-
 
         private void OnTriggerStay2D(Collider2D other)
         {

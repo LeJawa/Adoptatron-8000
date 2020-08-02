@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using SparuvianConnection.Adoptatron.Gameplay.Skills;
+﻿using SparuvianConnection.Adoptatron.Gameplay.Skills;
 using SparuvianConnection.Adoptatron.GUI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {

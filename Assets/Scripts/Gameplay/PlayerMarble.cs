@@ -1,7 +1,4 @@
 ﻿using SparuvianConnection.Adoptatron.Gameplay.Marbles;
-using SparuvianConnection.Adoptatron.Utils;
-using Unity.Mathematics;
-using UnityEngine;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
