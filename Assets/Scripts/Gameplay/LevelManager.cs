@@ -63,6 +63,9 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             // ResetCombo();
             
             Debug.Log("Loading level " + level);
+            
+            GameEvents.Instance.TriggerAllMarblesStopEvent();
+            
             CoroutineHelper.Instance.StartCoroutine(LoadLevelCoroutine(level));
         }
 

@@ -14,7 +14,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay.Marbles
             GameEvents.Instance.OnAllMarblesStop += StopMarbleMovement;
         }
 
-        protected void StopMarbleMovement()
+        public void StopMarbleMovement()
         {
             _rb2d.velocity = Vector2.zero;
         }
@@ -22,6 +22,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay.Marbles
         protected void OnDestroy()
         {
             GameEvents.Instance.OnAllMarblesStop -= StopMarbleMovement;
+        }
+
+        public void AddForce(Vector2 forceVector)
+        {
+            _rb2d.AddForce(forceVector, ForceMode2D.Impulse);
         }
     }
 }

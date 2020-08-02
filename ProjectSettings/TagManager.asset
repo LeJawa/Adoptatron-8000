@@ -7,6 +7,8 @@ TagManager:
   - Wall
   - HUD
   - Marble
+  - IOAnimation
+  - Cursor
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Cursor
+  - Player
   - 
   - 
   - 

@@ -492,6 +492,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameInitializer
       objectReference: {fileID: 0}
+    - target: {fileID: 2530998649166356356, guid: 0cbccb94ab8fecb45afa8a0867fb612e,
+        type: 3}
+      propertyPath: prefabCursor
+      value: 
+      objectReference: {fileID: 8169289845253098649, guid: 88419ac968a1972468e8a2ec7a6990b4,
+        type: 3}
     - target: {fileID: 2530998649166356357, guid: 0cbccb94ab8fecb45afa8a0867fb612e,
         type: 3}
       propertyPath: m_LocalPosition.x
