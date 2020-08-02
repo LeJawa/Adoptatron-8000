@@ -58,6 +58,8 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             //
             // InitializeFields(level);
             // ResetCombo();
+            
+            Debug.Log("Loading level " + level);
             CoroutineHelper.Instance.StartCoroutine(LoadLevelCoroutine(level));
         }
         
@@ -76,7 +78,8 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             //
             // SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level" + level));
             // SceneManager.UnloadSceneAsync(currentScene);
-            
+
+            Level = level;
             InitializeFields();
             ResetCombo();
             
