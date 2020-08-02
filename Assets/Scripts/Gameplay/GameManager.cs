@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using SparuvianConnection.Adoptatron.Gameplay.Skills;
 using SparuvianConnection.Adoptatron.GUI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -46,6 +47,19 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
             GameEvents.Instance.OnLoadLevel += HandleLoadLevelEvent;
             GameEvents.Instance.OnLoadNextLevel += HandleLoadNextLevelEvent;
+
+            GameEvents.Instance.OnNewSkillPowerUpAvailable += HandleNewSkillPowerUpAvailableEvent;
+            GameEvents.Instance.OnSkillPowerUpActivated += HandleSkillPowerUpActivatedEvent;
+        }
+
+        private void HandleSkillPowerUpActivatedEvent(SkillName skillName)
+        {
+            _hud.DeactivateSkillButton(skillName);
+        }
+
+        private void HandleNewSkillPowerUpAvailableEvent(SkillName skillName)
+        {
+            _hud.ActivateSkillButton(skillName);
         }
 
         private void HandleLoadNextLevelEvent()

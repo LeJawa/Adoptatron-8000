@@ -2,10 +2,11 @@
 
 namespace SparuvianConnection.Adoptatron.Gameplay.Marbles
 {
-    public class SitMarble : Marble
+    public class SitMarble : SkillMarble
     {
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             Skill = new Sit(1);
         }
     }

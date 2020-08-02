@@ -24,6 +24,16 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public void UpdateSkill(Skill skill, int comboMultiplier)
         {
             _dictionaryOfSkills[skill.Name].IncreaseMasteryByAmount(skill.Mastery * comboMultiplier);
+
+            if (MasteryIsEnoughToReachPowerUp(_dictionaryOfSkills[skill.Name].Mastery))
+            {
+                GameEvents.Instance.TriggerNewSkillPowerUpAvailableEvent(skill.Name);
+            }
+        }
+
+        private bool MasteryIsEnoughToReachPowerUp(int mastery)
+        {
+            return true;
         }
 
         public int GetMasteryOfSkill(SkillName skill)

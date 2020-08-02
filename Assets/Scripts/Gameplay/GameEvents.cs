@@ -1,5 +1,6 @@
 ﻿using System;
 using SparuvianConnection.Adoptatron.Gameplay.Marbles;
+using SparuvianConnection.Adoptatron.Gameplay.Skills;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
@@ -21,9 +22,9 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         #endregion
 
         #region Action<Marble> OnMarbleCollision
-        public event Action<Marble> OnMarbleCollision;
+        public event Action<SkillMarble> OnMarbleCollision;
 
-        public void TriggerMarbleCollisionEvent(Marble marble)
+        public void TriggerMarbleCollisionEvent(SkillMarble marble)
         {
             OnMarbleCollision?.Invoke(marble);
         }
@@ -47,12 +48,39 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         }
         #endregion
         
-        #region Action<int> OnLoadNextLevel
+        #region Action OnLoadNextLevel
         public event Action OnLoadNextLevel;
 
         public void TriggerLoadNextLevelEvent()
         {
             OnLoadNextLevel?.Invoke();
+        }
+        #endregion
+        
+        #region Action<SkillName> OnSkillPowerUpActivated
+        public event Action<SkillName> OnSkillPowerUpActivated;
+
+        public void TriggerSkillPowerUpActivatedEvent(SkillName skillName)
+        {
+            OnSkillPowerUpActivated?.Invoke(skillName);
+        }
+        #endregion
+        
+        #region Action<SkillName> OnNewSkillPowerUpAvailable
+        public event Action<SkillName> OnNewSkillPowerUpAvailable;
+
+        public void TriggerNewSkillPowerUpAvailableEvent(SkillName skillName)
+        {
+            OnNewSkillPowerUpAvailable?.Invoke(skillName);
+        }
+        #endregion
+        
+        #region Action OnAllMarblesStop
+        public event Action OnAllMarblesStop;
+
+        public void TriggerAllMarblesStopEvent()
+        {
+            OnAllMarblesStop?.Invoke();
         }
         #endregion
 

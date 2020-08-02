@@ -1,10 +1,11 @@
-﻿using SparuvianConnection.Adoptatron.Utils;
+﻿using SparuvianConnection.Adoptatron.Gameplay.Marbles;
+using SparuvianConnection.Adoptatron.Utils;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerMarble : Marble
     {
         private Camera _cameraMain;
         
@@ -15,8 +16,6 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         public float maxImpulse = 5f;
         public float maxPullDistance = 2f;
-        
-        private Rigidbody2D _rb2d;
 
         private LineRenderer _trajectory;
 
@@ -27,10 +26,10 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
 
         // Start is called before the first frame update
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             _cameraMain = Camera.main;
-            _rb2d = GetComponent<Rigidbody2D>();
 
             _trajectory = GetComponent<LineRenderer>();
         }
