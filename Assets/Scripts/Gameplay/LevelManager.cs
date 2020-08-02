@@ -70,6 +70,9 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         
         private IEnumerator LoadLevelCoroutine(int level)
         {
+            GameManager.Instance.StartEndSceneAnimation();
+            yield return new WaitForSeconds(1.5f);
+            
             yield return SceneManager.LoadSceneAsync("Level" + level, LoadSceneMode.Single);
             // Wait a frame so every Awake and Start method is called
             yield return new WaitForEndOfFrame();

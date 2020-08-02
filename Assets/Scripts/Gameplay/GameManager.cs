@@ -1,5 +1,7 @@
-﻿using SparuvianConnection.Adoptatron.GUI;
+﻿using System.Collections;
+using SparuvianConnection.Adoptatron.GUI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
@@ -29,6 +31,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private LevelManager _levelManager;
         public Dog CurrentDog => _currentDog;
+        
+        private Animator _animationAnim;
+        private static readonly int End = Animator.StringToHash("end");
+
+        public Animator Animator => _animationAnim;
 
         private GameManager()
         {
@@ -56,6 +63,21 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             if (_initialized) return;
 
             _initialized = true;
+        }
+
+        public void StartEndSceneAnimation()
+        {
+            Time.timeScale = 1;
+            if (_animationAnim == null)
+            {
+                InitializeSceneAnimator();
+            }
+
+            _animationAnim.SetTrigger(End);
+        }
+
+        public void InitializeSceneAnimator() {
+            _animationAnim = GameObject.FindGameObjectWithTag("IOAnimation").GetComponent<Animator>();
         }
         
 
