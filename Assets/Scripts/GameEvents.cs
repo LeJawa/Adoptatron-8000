@@ -28,15 +28,7 @@ namespace SparuvianConnection.Adoptatron
             OnMarbleCollision?.Invoke(marble);
         }
         #endregion
-        
-        #region Action OnResetCombo
-        public event Action OnResetCombo;
 
-        public void TriggerResetComboEvent()
-        {
-            OnResetCombo?.Invoke();
-        }
-        #endregion
 
     }
 }

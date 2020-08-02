@@ -57,8 +57,6 @@ namespace SparuvianConnection.Adoptatron
             _trajectory.SetPosition(1, Vector3.zero);
             
             Destroy(_startingPullPositionGO);
-            
-            GameEvents.Instance.TriggerResetComboEvent();
         }
 
         private void StartPulling()
@@ -68,16 +66,8 @@ namespace SparuvianConnection.Adoptatron
 
             Vector3 startingPullPosition = _cameraMain.ScreenToWorldPoint(_startingPullPositionInScreenCoordinates);
             startingPullPosition.z = 0;
-            
-            
-            if (_startingPullPositionGO == null)
-            {
-                _startingPullPositionGO = Instantiate(prefabStartingPullPosition, startingPullPosition, quaternion.identity);
-            }
-            else // Can happen if release frame is skipped
-            {
-                _startingPullPositionGO.transform.position = startingPullPosition;
-            }
+            _startingPullPositionGO = Instantiate(prefabStartingPullPosition, startingPullPosition, quaternion.identity);
+                ;
         }
 
         private void UpdatePullDirection()

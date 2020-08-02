@@ -7,7 +7,6 @@ namespace SparuvianConnection.Adoptatron
     {
         public TMP_Text sitSkillText;
         public TMP_Text comeSkillText;
-        public TMP_Text comboText;
         
         public void ChangeSitSkillMasteryTo(int mastery)
         {
@@ -17,11 +16,6 @@ namespace SparuvianConnection.Adoptatron
         public void ChangeComeSkillMasteryTo(int mastery)
         {
             comeSkillText.text = "Come: " + mastery;
-        }
-
-        public void ChangeComboTo(int combo)
-        {
-            comboText.text = "Combo: " + combo;
         }
     }
 }

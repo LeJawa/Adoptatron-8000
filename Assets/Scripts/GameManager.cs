@@ -25,74 +25,26 @@ namespace SparuvianConnection.Adoptatron
 
         private bool _initialized = false;
 
-        private readonly Dog _currentDog;
+        private Dog _currentDog;
 
-        private readonly HUD _hud;
+        private HUD _hud;
 
-        private int _currentCombo;
-        private const int StartingCombo = 1;
-        private int _numberOfCollisionsInThisRound = 0;
 
         private GameManager()
         {
             _currentDog = GameObject.FindWithTag("Player").GetComponent<Dog>();
             _hud = GameObject.FindWithTag("HUD").GetComponent<HUD>();
 
-            GameEvents.Instance.OnMarbleCollision += HandleMarbleCollisionEvent;
-            GameEvents.Instance.OnResetCombo += HandleResetComboEvent;
-            
-            ResetCombo();
+            GameEvents.Instance.OnMarbleCollision += HandleMarbleCollision;
+
         }
 
-        private void HandleResetComboEvent()
+        private void HandleMarbleCollision(Marble marble)
         {
-            ResetCombo();
-        }
-
-        private void ResetCombo()
-        {
-            _currentCombo = StartingCombo;
-            _numberOfCollisionsInThisRound = 0;
-            
-            UpdateComboHUD();
-        }
-
-
-        private void HandleMarbleCollisionEvent(Marble marble)
-        {
+            _currentDog.UpdateSkill(marble.Skill);
             Debug.Log("Skill " + marble.Skill.Name.ToString() + " with mastery " + marble.Skill.Mastery);
 
-            _numberOfCollisionsInThisRound++;
-            CalculateAndUpdateCombo();
-            
-            _currentDog.UpdateSkill(marble.Skill, _currentCombo);
             UpdateHUDOfSkill(marble.Skill.Name);
-        }
-
-        private void CalculateAndUpdateCombo()
-        {
-            if (_numberOfCollisionsInThisRound < 2)
-            {
-                _currentCombo = 1;
-            } 
-            else if (_numberOfCollisionsInThisRound < 5)
-            {
-                _currentCombo = 2;
-            } 
-            else if (_numberOfCollisionsInThisRound < 10)
-            {
-                _currentCombo = 3;
-            } 
-            else if (_numberOfCollisionsInThisRound < 20)
-            {
-                _currentCombo = 4;
-            } 
-            else // _numberOfCollisionsInThisRound > 20
-            {
-                _currentCombo = 5;
-            }
-            
-            UpdateComboHUD();
         }
 
         private void UpdateHUDOfSkill(SkillName skillName)
@@ -100,29 +52,24 @@ namespace SparuvianConnection.Adoptatron
             switch (skillName)
             {
                 case SkillName.Sit:
-                    UpdateSitSkillHUD();
+                    UpdateSitSkillText();
                     break;
                 case SkillName.Come:
-                    UpdateComeSkillHUD();
+                    UpdateComeSkillText();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(skillName), skillName, null);
             }
         }
 
-        private void UpdateSitSkillHUD()
+        private void UpdateSitSkillText()
         {
             _hud.ChangeSitSkillMasteryTo(_currentDog.GetMasteryOfSkill(SkillName.Sit));
         }
         
-        private void UpdateComeSkillHUD()
+        private void UpdateComeSkillText()
         {
             _hud.ChangeComeSkillMasteryTo(_currentDog.GetMasteryOfSkill(SkillName.Come));
-        }
-
-        private void UpdateComboHUD()
-        {
-            _hud.ChangeComboTo(_currentCombo);
         }
 
 
