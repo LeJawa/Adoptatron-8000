@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
-    public class Dog : MonoBehaviour
+    public class Dog
     {
         private Dictionary<SkillName, Skill> _dictionaryOfSkills;
 
-        private void Start()
+        public Dog()
         {
             _dictionaryOfSkills = new Dictionary<SkillName, Skill>();
 

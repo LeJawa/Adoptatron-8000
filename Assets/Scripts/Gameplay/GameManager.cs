@@ -32,15 +32,21 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private GameManager()
         {
-            _currentDog = GameObject.FindWithTag("Player").GetComponent<Dog>();
+            _currentDog = new Dog();
             _hud = GameObject.FindWithTag("HUD").GetComponent<HUD>();
             
-            _levelManager = new LevelManager(1);
+            _levelManager = new LevelManager(1, _currentDog);
 
-            GameEvents.Instance.OnLoadNewLevel += HandleLoadNewLevelEvent;
+            GameEvents.Instance.OnLoadLevel += HandleLoadLevelEvent;
+            GameEvents.Instance.OnLoadNextLevel += HandleLoadNextLevelEvent;
         }
 
-        private void HandleLoadNewLevelEvent(int level)
+        private void HandleLoadNextLevelEvent()
+        {
+            _levelManager.LoadNextLevel();
+        }
+
+        private void HandleLoadLevelEvent(int level)
         {
             _levelManager.LoadLevel(level);
         }

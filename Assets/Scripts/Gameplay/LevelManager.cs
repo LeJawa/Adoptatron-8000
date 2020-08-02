@@ -3,6 +3,7 @@ using System.Collections;
 using SparuvianConnection.Adoptatron.Gameplay.Marbles;
 using SparuvianConnection.Adoptatron.Gameplay.Skills;
 using SparuvianConnection.Adoptatron.GUI;
+using SparuvianConnection.Adoptatron.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,8 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private const int TotalNumberOfTries = 5;
         private int _currentNumberOfTries = 0;
+
+        private Dog _currentDog;
         
         private HUD _hud;
 
@@ -24,18 +27,21 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public int Level { get; private set; }
 
 
-        public LevelManager(int level)
+        public LevelManager(int level, Dog currentDog)
         {
-            InitializeFields(level);
+            Level = level;
+            _currentDog = currentDog;
+            
+            InitializeFields();
 
             SubscribeToEvents();
 
             ResetCombo();
+            UpdateAllHUDs();
         }
 
-        private void InitializeFields(int level)
+        private void InitializeFields()
         {
-            Level = level;
             _hud = GameObject.FindWithTag("HUD").GetComponent<HUD>();
             _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         }
@@ -52,21 +58,29 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             //
             // InitializeFields(level);
             // ResetCombo();
-
+            CoroutineHelper.Instance.StartCoroutine(LoadLevelCoroutine(level));
+        }
+        
+        public void LoadNextLevel()
+        {
+            LoadLevel(Level + 1);
         }
         
         private IEnumerator LoadLevelCoroutine(int level)
         {
-            // Start loading the scene
-            AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync("Level" + level, LoadSceneMode.Single);
-            // Wait until the level finish loading
-            while (!asyncLoadLevel.isDone)
-                yield return null;
+            yield return SceneManager.LoadSceneAsync("Level" + level, LoadSceneMode.Single);
             // Wait a frame so every Awake and Start method is called
             yield return new WaitForEndOfFrame();
             
-            InitializeFields(level);
+            // string currentScene = SceneManager.GetActiveScene().name;
+            //
+            // SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level" + level));
+            // SceneManager.UnloadSceneAsync(currentScene);
+            
+            InitializeFields();
             ResetCombo();
+            
+            UpdateAllHUDs();
         }
         
 
@@ -74,7 +88,8 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         {
             _currentNumberOfTries++;
             ResetCombo();
-
+            UpdateComboHUD();
+            
             if (_currentNumberOfTries >= TotalNumberOfTries)
             {
                 _playerController.CannotShootAnymore();
@@ -85,8 +100,6 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         {
             _currentCombo = StartingCombo;
             _numberOfCollisionsInThisRound = 0;
-            
-            UpdateComboHUD();
         }
         
         private void HandleMarbleCollisionEvent(Marble marble)
@@ -143,17 +156,25 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private void UpdateSitSkillHUD()
         {
-            _hud.ChangeSitSkillMasteryTo(GameManager.Instance.CurrentDog.GetMasteryOfSkill(SkillName.Sit));
+            _hud.ChangeSitSkillMasteryTo(_currentDog.GetMasteryOfSkill(SkillName.Sit));
         }
         
         private void UpdateComeSkillHUD()
         {
-            _hud.ChangeComeSkillMasteryTo(GameManager.Instance.CurrentDog.GetMasteryOfSkill(SkillName.Come));
+            _hud.ChangeComeSkillMasteryTo(_currentDog.GetMasteryOfSkill(SkillName.Come));
         }
 
         private void UpdateComboHUD()
         {
             _hud.ChangeComboTo(_currentCombo);
         }
+
+        private void UpdateAllHUDs()
+        {
+            UpdateSitSkillHUD();
+            UpdateComeSkillHUD();
+            UpdateComboHUD();
+        }
+
     }
 }

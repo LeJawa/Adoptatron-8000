@@ -38,12 +38,21 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         }
         #endregion
         
-        #region Action<int> OnLoadNewLevel
-        public event Action<int> OnLoadNewLevel;
+        #region Action<int> OnLoadLevel
+        public event Action<int> OnLoadLevel;
 
-        public void TriggerLoadNewLevelEvent(int level)
+        public void TriggerLoadLevelEvent(int level)
         {
-            OnLoadNewLevel?.Invoke(level);
+            OnLoadLevel?.Invoke(level);
+        }
+        #endregion
+        
+        #region Action<int> OnLoadNextLevel
+        public event Action OnLoadNextLevel;
+
+        public void TriggerLoadNextLevelEvent()
+        {
+            OnLoadNextLevel?.Invoke();
         }
         #endregion
 

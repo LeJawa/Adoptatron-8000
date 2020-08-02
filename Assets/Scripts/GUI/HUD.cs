@@ -28,7 +28,7 @@ namespace SparuvianConnection.Adoptatron.GUI
 
         public void HandleNextLevelButtonPressed()
         {
-            GameEvents.Instance.TriggerLoadNewLevelEvent(2);
+            GameEvents.Instance.TriggerLoadNextLevelEvent();
         }
     }
 }
