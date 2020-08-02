@@ -64,9 +64,10 @@ namespace SparuvianConnection.Adoptatron
             _startingToPull = true;
             _startingPullPositionInScreenCoordinates = Input.mousePosition;
 
-            _startingPullPositionGO = Instantiate(prefabStartingPullPosition);
-            _startingPullPositionGO.transform.position =
-                _cameraMain.ScreenToWorldPoint(_startingPullPositionInScreenCoordinates);
+            Vector3 startingPullPosition = _cameraMain.ScreenToWorldPoint(_startingPullPositionInScreenCoordinates);
+            startingPullPosition.z = 0;
+            _startingPullPositionGO = Instantiate(prefabStartingPullPosition, startingPullPosition, quaternion.identity);
+                ;
         }
 
         private void UpdatePullDirection()
