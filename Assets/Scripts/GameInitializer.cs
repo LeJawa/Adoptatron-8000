@@ -9,7 +9,6 @@ namespace SparuvianConnection.Adoptatron
         private void Start()
         {
             ScreenUtils.Initialize();
-            GameManager.Instance.Initialize();
             
             Destroy(gameObject);
         }
