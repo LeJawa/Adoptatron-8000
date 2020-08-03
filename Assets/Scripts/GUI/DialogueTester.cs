@@ -7,7 +7,7 @@ namespace SparuvianConnection.Adoptatron.GUI
 {
     public class DialogueTester : MonoBehaviour
     {
-        public Text text;
+        public TMP_Text text;
         private TextWriter.TextWriterSingle textWriterSingle;
         
         private DialogueScriptableObject _dialogue;

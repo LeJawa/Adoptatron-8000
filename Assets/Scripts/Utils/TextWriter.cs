@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,24 +29,24 @@ namespace SparuvianConnection.Adoptatron.Utils
             textWriterSingleList = new List<TextWriterSingle>();
         }
 
-        public static TextWriterSingle AddWriter_Static(Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, bool removeWriterBeforeAdd, Action onComplete) {
+        public static TextWriterSingle AddWriter_Static(TMP_Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, bool removeWriterBeforeAdd, Action onComplete) {
             if (removeWriterBeforeAdd) {
                 instance.RemoveWriter(uiText);
             }
             return instance.AddWriter(uiText, textToWrite, timePerCharacter, invisibleCharacters, onComplete);
         }
 
-        private TextWriterSingle AddWriter(Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, Action onComplete) {
+        private TextWriterSingle AddWriter(TMP_Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, Action onComplete) {
             TextWriterSingle textWriterSingle = new TextWriterSingle(uiText, textToWrite, timePerCharacter, invisibleCharacters, onComplete);
             textWriterSingleList.Add(textWriterSingle);
             return textWriterSingle;
         }
 
-        public static void RemoveWriter_Static(Text uiText) {
+        public static void RemoveWriter_Static(TMP_Text uiText) {
             instance.RemoveWriter(uiText);
         }
 
-        private void RemoveWriter(Text uiText) {
+        private void RemoveWriter(TMP_Text uiText) {
             for (int i = 0; i < textWriterSingleList.Count; i++) {
                 if (textWriterSingleList[i].GetUIText() == uiText) {
                     textWriterSingleList.RemoveAt(i);
@@ -69,7 +70,7 @@ namespace SparuvianConnection.Adoptatron.Utils
      * */
         public class TextWriterSingle {
 
-            private Text uiText;
+            private TMP_Text uiText;
             private string textToWrite;
             private int characterIndex;
             private float timePerCharacter;
@@ -77,7 +78,7 @@ namespace SparuvianConnection.Adoptatron.Utils
             private bool invisibleCharacters;
             private Action onComplete;
 
-            public TextWriterSingle(Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, Action onComplete) {
+            public TextWriterSingle(TMP_Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, Action onComplete) {
                 this.uiText = uiText;
                 this.textToWrite = textToWrite;
                 this.timePerCharacter = timePerCharacter;
@@ -109,7 +110,7 @@ namespace SparuvianConnection.Adoptatron.Utils
                 return false;
             }
 
-            public Text GetUIText() {
+            public TMP_Text GetUIText() {
                 return uiText;
             }
 
