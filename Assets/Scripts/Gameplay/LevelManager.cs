@@ -57,11 +57,6 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         public void LoadLevel(int level)
         {
-            // SceneManager.LoadScene("Level" + level);
-            //
-            // InitializeFields(level);
-            // ResetCombo();
-            
             Debug.Log("Loading level " + level);
             
             GameEvents.Instance.TriggerAllMarblesStopEvent();
@@ -82,11 +77,6 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             yield return SceneManager.LoadSceneAsync("Level" + level, LoadSceneMode.Single);
             // Wait a frame so every Awake and Start method is called
             yield return new WaitForEndOfFrame();
-            
-            // string currentScene = SceneManager.GetActiveScene().name;
-            //
-            // SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level" + level));
-            // SceneManager.UnloadSceneAsync(currentScene);
 
             Level = level;
             _currentNumberOfTries = 0;
@@ -154,27 +144,17 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private void UpdateHUDOfSkill(SkillName skillName)
         {
-            switch (skillName)
-            {
-                case SkillName.Sit:
-                    UpdateSitSkillHUD();
-                    break;
-                case SkillName.Come:
-                    UpdateComeSkillHUD();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(skillName), skillName, null);
-            }
+            _hud.ChangeSkillMasteryTo(skillName, _currentDog.GetMasteryOfSkill(skillName));
         }
 
         private void UpdateSitSkillHUD()
         {
-            _hud.ChangeSitSkillMasteryTo(_currentDog.GetMasteryOfSkill(SkillName.Sit));
+            UpdateHUDOfSkill(SkillName.Sit);
         }
 
         private void UpdateComeSkillHUD()
         {
-            _hud.ChangeComeSkillMasteryTo(_currentDog.GetMasteryOfSkill(SkillName.Come));
+            UpdateHUDOfSkill(SkillName.Come);
         }
 
         private void UpdateComboHUD()

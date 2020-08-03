@@ -1,5 +1,7 @@
-﻿using SparuvianConnection.Adoptatron.Gameplay;
+﻿using System;
+using SparuvianConnection.Adoptatron.Gameplay;
 using SparuvianConnection.Adoptatron.Gameplay.Skills;
+using SparuvianConnection.Adoptatron.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,23 +10,30 @@ namespace SparuvianConnection.Adoptatron.GUI
 {
     public class HUD : MonoBehaviour
     {
-        public Button sitSkillButton;
-        public TMP_Text sitSkillText;
+        [Serializable]
+        public struct SkillGUI
+        {
+            public Button Button;
+            public SkillName Name;
+            public TMP_Text textObject;
 
-        public Button comeSkillButton;
-        public TMP_Text comeSkillText;
+            public SkillGUI(Button button, TMP_Text textObject, SkillName name)
+            {
+                this.Button = button;
+                this.textObject = textObject;
+                this.Name = name;
+            }
+        }
         
         public TMP_Text comboText;
 
+        public SkillGUIDictionary skillGUIDictionary;
 
-        public void ChangeSitSkillMasteryTo(int mastery)
+
+        public void ChangeSkillMasteryTo(SkillName skillName, int mastery)
         {
-            sitSkillText.text = "Sit: " + mastery;
-        }
-        
-        public void ChangeComeSkillMasteryTo(int mastery)
-        {
-            comeSkillText.text = "Come: " + mastery;
+            var skillGUI = skillGUIDictionary[skillName];
+            skillGUI.textObject.text = " " + skillGUI.Name.ToString() + ": " + mastery;
         }
 
         public void ChangeComboTo(int combo)
@@ -51,52 +60,23 @@ namespace SparuvianConnection.Adoptatron.GUI
         {
             MakeSureTheSkillButtonExists(skillName);
 
-            switch (skillName)
-            {
-                case SkillName.Sit:
-                    sitSkillButton.interactable = state;
-                    break;
-                case SkillName.Come:
-                    comeSkillButton.interactable = state;
-                    break;
-                default:
-                    Debug.Log("No skill button could be toggled");
-                    break;
-            }
+            skillGUIDictionary[skillName].Button.interactable = state;
         }
 
         private void MakeSureTheSkillButtonExists(SkillName skillName)
         {
             if (SkillButtonIsNotAvailable(skillName))
             {
-                switch (skillName)
-                {
-                    case SkillName.Sit:
-                        sitSkillButton = GameObject.Find("SitSkillButton").GetComponent<Button>();
-                        break;
-                    case SkillName.Come:
-                        comeSkillButton = GameObject.Find("ComeSkillButton").GetComponent<Button>();
-                        break;
-                    default:
-                        Debug.Log("No skill button could be found");
-                        break;
-                }
+                // ReSharper disable once NotAccessedVariable
+                SkillGUI skillGui = skillGUIDictionary[skillName];
+                string objectName = skillName + "SkillButton";
+                skillGui.Button = GameObject.Find(objectName).GetComponent<Button>();
             }
         }
 
         private bool SkillButtonIsNotAvailable(SkillName skillName)
         {
-            switch (skillName)
-            {
-                case SkillName.Sit:
-                    return sitSkillButton == null;
-                case SkillName.Come:
-                    return comeSkillButton == null;
-                default:
-                    return false;
-            }
-            
-            
+            return skillGUIDictionary[skillName].Button == null;
         }
 
         public void ActivateSkillButton(SkillName skillName)

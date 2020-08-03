@@ -728,11 +728,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48cd56552e1f8ab43842b06c39f4d033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sitSkillButton: {fileID: 6328784882333461322}
-  sitSkillText: {fileID: 8449208628410658874}
-  comeSkillButton: {fileID: 4819548513948414715}
-  comeSkillText: {fileID: 8449208629102947506}
   comboText: {fileID: 8449208628639570328}
+  skillGUIDictionary:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues: 0100000000000000
+    _keys: 0100000000000000
+    _values:
+    - Button: {fileID: 4819548513948414715}
+      Name: 1
+      textObject: {fileID: 8449208629102947506}
+    - Button: {fileID: 6328784882333461322}
+      Name: 0
+      textObject: {fileID: 8449208628410658874}
 --- !u!1 &8449208628410658876
 GameObject:
   m_ObjectHideFlags: 0

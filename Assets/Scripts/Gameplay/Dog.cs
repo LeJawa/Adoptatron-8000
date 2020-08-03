@@ -24,13 +24,13 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         {
             _dictionaryOfSkills[skill.Name].IncreaseMasteryByAmount(skill.Mastery * comboMultiplier);
 
-            if (MasteryIsEnoughToReachPowerUp(_dictionaryOfSkills[skill.Name].Mastery))
+            if (MasteryIsEnoughToReachPowerUp(skill.Name))
             {
                 GameEvents.Instance.TriggerNewSkillPowerUpAvailableEvent(skill.Name);
             }
         }
 
-        private bool MasteryIsEnoughToReachPowerUp(int mastery)
+        private bool MasteryIsEnoughToReachPowerUp(SkillName skillName)
         {
             return true;
         }
