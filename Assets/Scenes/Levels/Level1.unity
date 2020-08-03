@@ -944,6 +944,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8449208628341423703, guid: 11b1a589c9185ac449004060691305b3,
+        type: 3}
+      propertyPath: comeSkillGUI.skillName
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11b1a589c9185ac449004060691305b3, type: 3}
 --- !u!1001 &9006796151547156240
