@@ -9,7 +9,6 @@ namespace SparuvianConnection.Adoptatron.Dialogue
     public class DialogueNode : ScriptableObject
     {
         public DialogueScriptableObject _dialogue;
-        public UnityEvent OnDialogueEnd;
 
         public AnswerDialogueDictionary answersDictionary;
 
