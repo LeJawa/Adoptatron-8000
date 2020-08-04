@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: dialogue1
   m_EditorClassIdentifier: 
   dialogueLinesArray:
-  - This is a first sentence
-  - This is the second
-  - And, naturally, the third
+  - Hi there!
+  - I am Adoptatron 8000
+  - The only A.I. capable of determining the future with an accuracy of 99.978%
+  - (Sorry Susan, no reimbursements permitted, as per clause 32.a.I of the Laws of
+    Robotics)
+  - (Poor Asimov, it turns out 3 laws didn't quite cut it...)
+  - But I digress
+  - You are here because you want to adopt a PUPPY!
+  - (I hope)
+  - I mean
+  - Do you want to adopt a puppy?

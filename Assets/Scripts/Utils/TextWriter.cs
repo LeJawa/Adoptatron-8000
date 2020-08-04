@@ -1,12 +1,8 @@
 ﻿/* 
-    ------------------- Code Monkey -------------------
+    --------------------------------------------------
+    Original code by Code Monkey
 
-    Thank you for downloading this package
-    I hope you find it useful in your projects
-    If you have any questions let me know
-    Cheers!
-
-               unitycodemonkey.com
+    Adapted  and rewritten to my own needs
     --------------------------------------------------
  */
 
@@ -14,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SparuvianConnection.Adoptatron.Utils
 {
@@ -29,15 +24,15 @@ namespace SparuvianConnection.Adoptatron.Utils
             textWriterSingleList = new List<TextWriterSingle>();
         }
 
-        public static TextWriterSingle AddWriter_Static(TMP_Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, bool removeWriterBeforeAdd, Action onComplete) {
+        public static TextWriterSingle AddWriter_Static(TMP_Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, bool visibleCursor, bool removeWriterBeforeAdd, Action onComplete) {
             if (removeWriterBeforeAdd) {
                 instance.RemoveWriter(uiText);
             }
-            return instance.AddWriter(uiText, textToWrite, timePerCharacter, invisibleCharacters, onComplete);
+            return instance.AddWriter(uiText, textToWrite, timePerCharacter, invisibleCharacters, visibleCursor, onComplete);
         }
 
-        private TextWriterSingle AddWriter(TMP_Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, Action onComplete) {
-            TextWriterSingle textWriterSingle = new TextWriterSingle(uiText, textToWrite, timePerCharacter, invisibleCharacters, onComplete);
+        private TextWriterSingle AddWriter(TMP_Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, bool visibleCursor, Action onComplete) {
+            TextWriterSingle textWriterSingle = new TextWriterSingle(uiText, textToWrite, timePerCharacter, invisibleCharacters, visibleCursor, onComplete);
             textWriterSingleList.Add(textWriterSingle);
             return textWriterSingle;
         }
@@ -74,40 +69,109 @@ namespace SparuvianConnection.Adoptatron.Utils
             private string textToWrite;
             private int characterIndex;
             private float timePerCharacter;
-            private float timer;
+            private float _timer;
             private bool invisibleCharacters;
+            private bool visibleCursor;
             private Action onComplete;
 
-            public TextWriterSingle(TMP_Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, Action onComplete) {
+            private bool _startedCursorAnimation = false;
+            private float _cursorBlinkingDuration = 1f;
+            private bool _currentlyDisplayingCursor = true;
+            private char _cursorCharacter = '█';
+            // private char _cursorCharacter = '_';
+
+            public TextWriterSingle(TMP_Text uiText, string textToWrite, float timePerCharacter, bool invisibleCharacters, bool visibleCursor, Action onComplete) {
                 this.uiText = uiText;
                 this.textToWrite = textToWrite;
                 this.timePerCharacter = timePerCharacter;
                 this.invisibleCharacters = invisibleCharacters;
+                this.visibleCursor = visibleCursor;
                 this.onComplete = onComplete;
                 characterIndex = 0;
             }
 
             // Returns true on complete
             public bool Update() {
-                timer -= Time.deltaTime;
-                while (timer <= 0f) {
-                    // Display next character
-                    timer += timePerCharacter;
-                    characterIndex++;
-                    string text = textToWrite.Substring(0, characterIndex);
-                    if (invisibleCharacters) {
-                        text += "<color=#00000000>" + textToWrite.Substring(characterIndex) + "</color>";
-                    }
-                    uiText.text = text;
+                if (!_startedCursorAnimation)
+                {
+                    _timer -= Time.deltaTime;
+                    while (_timer <= 0f) {
+                        // Display next character
+                        _timer += timePerCharacter;
+                        characterIndex++;
+                        string text = textToWrite.Substring(0, characterIndex);
+                        if (invisibleCharacters) {
+                            text += "<color=#00000000>" + textToWrite.Substring(characterIndex) + "</color>";
+                        }
 
-                    if (characterIndex >= textToWrite.Length) {
-                        // Entire string displayed
-                        if (onComplete != null) onComplete();
-                        return true;
+                        if (visibleCursor)
+                        {
+                            DrawCursor(text);
+                        }
+                        else
+                        {
+                            uiText.text = text;
+                        }
+
+                        if (characterIndex >= textToWrite.Length) {
+                            // Entire string displayed
+                            if (onComplete != null) onComplete();
+                            if (visibleCursor)
+                            {
+                                StartCursorAnimation();
+                                return false;
+                            }
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                    _timer += Time.deltaTime;
+                    if (_timer > _cursorBlinkingDuration)
+                    {
+                        ToggleCursor();
                     }
                 }
 
                 return false;
+
+            }
+
+            private void DrawCursor(string text)
+            {
+                int lineCount = uiText.textInfo.lineCount;
+
+                uiText.text = text + _cursorCharacter;
+                uiText.ForceMeshUpdate();
+
+                if (lineCount != uiText.textInfo.lineCount)
+                {
+                    uiText.text = text + ' ' + _cursorCharacter;
+                }
+            }
+
+            private void ToggleCursor()
+            {
+                if (_currentlyDisplayingCursor)
+                {
+                    uiText.text = textToWrite + ' ';
+                    _currentlyDisplayingCursor = false;
+                }
+                else
+                {
+                    DrawCursor(textToWrite);
+                    _currentlyDisplayingCursor = true;
+                }
+                
+                
+                _timer = 0;
+            }
+
+            private void StartCursorAnimation()
+            {
+                _startedCursorAnimation = true;
+                _timer = 0;
             }
 
             public TMP_Text GetUIText() {
@@ -119,10 +183,18 @@ namespace SparuvianConnection.Adoptatron.Utils
             }
 
             public void WriteAllAndDestroy() {
-                uiText.text = textToWrite;
+                uiText.text = textToWrite + _cursorCharacter;
                 characterIndex = textToWrite.Length;
                 if (onComplete != null) onComplete();
-                TextWriter.RemoveWriter_Static(uiText);
+                
+                if (visibleCursor)
+                {
+                    StartCursorAnimation();
+                }
+                else
+                {
+                    TextWriter.RemoveWriter_Static(uiText);
+                }
             }
 
 

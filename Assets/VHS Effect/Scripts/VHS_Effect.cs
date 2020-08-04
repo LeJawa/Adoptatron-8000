@@ -28,13 +28,6 @@ public class VHS_Effect : MonoBehaviour {
 	[Range(1f,10f)]
 	public float _adjustLines = 2f;
 	public Color _scanLinesColor;
-	
-
-void Start(){
-
-_VHS_Material.SetFloat("_OffsetPosY", _verticalOffset);
-
-}
 
 
 
@@ -70,10 +63,6 @@ _VHS_Material.SetFloat("_OffsetPosY", _verticalOffset);
 		else if (_verticalOffset < 0.0f)
 		{
 			_VHS_Material.SetFloat("_OffsetPosY", _verticalOffset + Random.Range(0f, -_verticalOffset));
-		}
-		else if (Random.Range(0, 150) == 1)
-		{
-			_VHS_Material.SetFloat("_OffsetPosY", Random.Range(-0.5f, 0.5f));
 		}
 
 		offsetColor = _VHS_Material.GetFloat("_OffsetColor");

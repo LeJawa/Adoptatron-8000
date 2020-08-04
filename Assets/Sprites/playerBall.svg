@@ -29,7 +29,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="393.29656"
+     inkscape:cx="229.14677"
      inkscape:cy="361.44922"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -42,8 +42,8 @@
      units="px"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="534"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5254">
@@ -53,7 +53,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -62,6 +62,12 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(14.420378,34.416961)">
+    <circle
+       style="opacity:1;fill:#192ca6;fill-opacity:1;stroke:none;stroke-width:2.64600015;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-dashoffset:12.00000095;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path4483"
+       cx="78.589417"
+       cy="58.31612"
+       r="52.919365" />
     <path
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.64583325;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-dashoffset:12.00000095;stroke-opacity:1;paint-order:stroke fill markers"
        d="M 78.184047,0.45688025 A 58.532024,57.730217 0 0 0 19.651703,58.187206 58.532024,57.730217 0 0 0 78.184047,115.91753 58.532024,57.730217 0 0 0 136.71587,58.187206 58.532024,57.730217 0 0 0 78.184047,0.45688025 Z M 57.941871,28.952298 a 9.3549106,9.3549106 0 0 1 9.354984,9.354468 9.3549106,9.3549106 0 0 1 -9.354984,9.354984 9.3549106,9.3549106 0 0 1 -9.354983,-9.354984 9.3549106,9.3549106 0 0 1 9.354983,-9.354468 z m 38.742337,0 a 9.3549106,9.3549106 0 0 1 9.354982,9.354468 9.3549106,9.3549106 0 0 1 -9.354982,9.354984 9.3549106,9.3549106 0 0 1 -9.354466,-9.354984 9.3549106,9.3549106 0 0 1 9.354466,-9.354468 z M 51.644066,76.580915 c 5.494758,-0.06248 17.62942,5.568627 26.088845,5.724715 8.794012,0.162261 27.473519,-7.058236 28.743469,-3.30264 1.21204,3.584368 -13.697647,10.005208 -29.495878,9.926008 -13.30048,-0.06668 -27.794831,-6.00533 -28.20448,-9.517248 -0.238059,-2.040893 0.880576,-2.808235 2.868044,-2.830835 z"

@@ -81,6 +81,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             Level = level;
             _currentNumberOfTries = 0;
             FindGameObjectsInScene();
+            GameManager.Instance.FindGameObjectsInScene();
             ResetCombo();
             
             UpdateAllHUDs();

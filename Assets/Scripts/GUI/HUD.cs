@@ -28,6 +28,8 @@ namespace SparuvianConnection.Adoptatron.GUI
         public TMP_Text comboText;
 
         public SkillGUIDictionary skillGUIDictionary;
+        
+        public Sprite skillReadyButtonSprite;
 
 
         public void ChangeSkillMasteryTo(SkillName skillName, int mastery)
@@ -61,6 +63,9 @@ namespace SparuvianConnection.Adoptatron.GUI
             MakeSureTheSkillButtonExists(skillName);
 
             skillGUIDictionary[skillName].Button.interactable = state;
+
+            skillGUIDictionary[skillName].Button.image.sprite = state ? skillReadyButtonSprite : null;
+            skillGUIDictionary[skillName].Button.image.color = state ? Color.white : new Color(0, 0, 0, 0);
         }
 
         private void MakeSureTheSkillButtonExists(SkillName skillName)

@@ -26,7 +26,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private readonly Dog _currentDog;
 
-        private readonly HUD _hud;
+        private HUD _hud;
 
         private LevelManager _levelManager;
         public Dog CurrentDog => _currentDog;
@@ -39,7 +39,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private GameManager()
         {
             _currentDog = new Dog();
-            _hud = GameObject.FindWithTag("HUD").GetComponent<HUD>();
+            FindGameObjectsInScene();
             
             _levelManager = new LevelManager(1, _currentDog);
 
@@ -48,6 +48,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
             GameEvents.Instance.OnNewSkillPowerUpAvailable += HandleNewSkillPowerUpAvailableEvent;
             GameEvents.Instance.OnSkillPowerUpActivated += HandleSkillPowerUpActivatedEvent;
+        }
+
+        public void FindGameObjectsInScene()
+        {
+            _hud = GameObject.FindWithTag("HUD").GetComponent<HUD>();
         }
 
         private void HandleSkillPowerUpActivatedEvent(SkillName skillName)

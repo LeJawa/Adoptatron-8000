@@ -1,7 +1,7 @@
-﻿using SparuvianConnection.Adoptatron.Utils;
+﻿using System;
+using SparuvianConnection.Adoptatron.Utils;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SparuvianConnection.Adoptatron.GUI
 {
@@ -31,12 +31,17 @@ namespace SparuvianConnection.Adoptatron.GUI
                 if (message != null)
                 {
                     textWriterSingle = TextWriter.AddWriter_Static(uiText: text, textToWrite: message,
-                        timePerCharacter: .01f, invisibleCharacters: true, removeWriterBeforeAdd: false, onComplete: null);
+                        timePerCharacter: .01f, invisibleCharacters: false, visibleCursor: true, removeWriterBeforeAdd: true, onComplete: null);
                 }
             }
         }
 
-
-
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                HandleGetNextLineButtonPressed();
+            }
+        }
     }
 }
