@@ -20,6 +20,14 @@ namespace SparuvianConnection.Adoptatron.Dialogue
         }
         #endregion
 
+        public Transform AnswersObjectTransform { get; private set; }
+
+        private AnswerManager()
+        {
+            AnswersObjectTransform = GameObject.FindWithTag("Answers").transform;
+        }
+        
+
         #region Answer: Yes
         private DialogueNode _yesNode;
         public void SetYesAnswerDialogue(DialogueNode node)

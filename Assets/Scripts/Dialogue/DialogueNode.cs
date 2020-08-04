@@ -13,35 +13,25 @@ namespace SparuvianConnection.Adoptatron.Dialogue
 
         public AnswerDialogueDictionary answersDictionary;
 
-        [NonSerialized]
-        private string nextLine;
-
         [NonSerialized] private bool _endOfDialogue = false;
-
-        private void Awake()
-        {
-            nextLine = _dialogue.GetNextLine();
-        }
 
         public string GetNextLine()
         {
-            if (nextLine == null)
+            if (_endOfDialogue)
             {
                 return null;
             }
             
-            string message = nextLine;
-            nextLine = _dialogue.GetNextLine();
+            string message = _dialogue.GetNextLine();
+            string nextLine = _dialogue.SeeNextLine();
 
-            if (nextLine != null)
-            {
-                return message;
-            }
-            else // Last line
+            if (nextLine == null)
             {
                 ShowAnswers();
-                return message;
+                _endOfDialogue = true;
             }
+
+            return message;
         }
 
         private void ShowAnswers()
@@ -49,7 +39,6 @@ namespace SparuvianConnection.Adoptatron.Dialogue
             foreach (AnswerEnum answer in answersDictionary.Keys)
             {
                 Answer.GetAnswerFromEnum(answer).DrawAnswerButton(answersDictionary[answer]);
-                
             }
         }
     }

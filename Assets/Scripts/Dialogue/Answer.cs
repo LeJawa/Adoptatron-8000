@@ -20,7 +20,7 @@ namespace SparuvianConnection.Adoptatron.Dialogue
 
         protected Button DrawAnswerButton(string answer)
         {
-            return ((GameObject)Object.Instantiate(Resources.Load(@"Dialogues\" + answer + "Button"), GameObject.FindWithTag("Answers").transform)).GetComponent<Button>();
+            return ((GameObject)Object.Instantiate(Resources.Load(@"Dialogues\" + answer + "Button"), AnswerManager.Instance.AnswersObjectTransform)).GetComponent<Button>();
         }
 
         public abstract void DrawAnswerButton(DialogueNode dialogueNode);
@@ -41,6 +41,7 @@ namespace SparuvianConnection.Adoptatron.Dialogue
         public override void DrawAnswerButton(DialogueNode dialogueNode)
         {
             Button button = DrawAnswerButton("No");
+            AnswerManager.Instance.SetNoAnswerDialogue(dialogueNode);
             button.onClick.AddListener(AnswerManager.Instance.HandleNoAnswerSelected);
         }
     }

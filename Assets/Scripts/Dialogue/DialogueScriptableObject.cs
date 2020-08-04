@@ -15,7 +15,7 @@ namespace SparuvianConnection.Adoptatron.Dialogue
 
         private void Awake()
         {
-            _currentIndex = 1; // The first line is accessed early by the node
+            _currentIndex = 0;
         }
 
         public string GetNextLine()
@@ -24,6 +24,11 @@ namespace SparuvianConnection.Adoptatron.Dialogue
             
             _currentIndex++;
             return dialogueLinesArray[_currentIndex - 1];
+        }
+
+        public string SeeNextLine()
+        {
+            return _currentIndex < dialogueLinesArray.Length ? dialogueLinesArray[_currentIndex] : null;
         }
         
 

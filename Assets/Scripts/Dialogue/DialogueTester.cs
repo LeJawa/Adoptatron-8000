@@ -22,11 +22,26 @@ namespace SparuvianConnection.Adoptatron.Dialogue
         private void StartNewDialogue(DialogueNode dialogue)
         {
             _dialogueNode = dialogue;
+
+            RemoveAnswers();
+            
+            ShowNextLine();
+        }
+
+        private void RemoveAnswers()
+        {
+            foreach (Transform child in AnswerManager.Instance.AnswersObjectTransform) {
+                GameObject.Destroy(child.gameObject);
+            }
         }
 
         public void HandleGetNextLineButtonPressed()
         {
+            ShowNextLine();
+        }
 
+        private void ShowNextLine()
+        {
             if (textWriterSingle != null && textWriterSingle.IsActive())
             {
                 // Currently active TextWriter
@@ -38,7 +53,8 @@ namespace SparuvianConnection.Adoptatron.Dialogue
                 if (message != null)
                 {
                     textWriterSingle = TextWriter.AddWriter_Static(uiText: text, textToWrite: message,
-                        timePerCharacter: .01f, invisibleCharacters: false, visibleCursor: true, removeWriterBeforeAdd: true, onComplete: null);
+                        timePerCharacter: .01f, invisibleCharacters: false, visibleCursor: true, removeWriterBeforeAdd: true,
+                        onComplete: null);
                 }
             }
         }
