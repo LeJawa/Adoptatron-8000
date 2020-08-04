@@ -140,6 +140,9 @@ namespace SparuvianConnection.Adoptatron.Utils
 
             private void DrawCursor(string text)
             {
+                uiText.text = text;
+                uiText.ForceMeshUpdate();
+
                 int lineCount = uiText.textInfo.lineCount;
 
                 uiText.text = text + _cursorCharacter;

@@ -1,20 +1,27 @@
-﻿using System;
+﻿using SparuvianConnection.Adoptatron.Gameplay;
 using SparuvianConnection.Adoptatron.Utils;
 using TMPro;
 using UnityEngine;
 
-namespace SparuvianConnection.Adoptatron.GUI
+namespace SparuvianConnection.Adoptatron.Dialogue
 {
     public class DialogueTester : MonoBehaviour
     {
         public TMP_Text text;
         private TextWriter.TextWriterSingle textWriterSingle;
-        
-        private DialogueScriptableObject _dialogue;
+
+        private DialogueNode _dialogueNode;
 
         private void Start()
         {
-            _dialogue = Resources.Load<DialogueScriptableObject>(@"Dialogues\dialogue1");
+            _dialogueNode = Resources.Load<DialogueNode>(@"Nodes\node1");
+
+            GameEvents.Instance.OnStartDialogue += StartNewDialogue;
+        }
+
+        private void StartNewDialogue(DialogueNode dialogue)
+        {
+            _dialogueNode = dialogue;
         }
 
         public void HandleGetNextLineButtonPressed()
@@ -27,7 +34,7 @@ namespace SparuvianConnection.Adoptatron.GUI
             }
             else
             {
-                string message = _dialogue.GetNextLine();
+                string message = _dialogueNode.GetNextLine();
                 if (message != null)
                 {
                     textWriterSingle = TextWriter.AddWriter_Static(uiText: text, textToWrite: message,

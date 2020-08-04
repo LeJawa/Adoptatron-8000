@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace SparuvianConnection.Adoptatron.GUI
+namespace SparuvianConnection.Adoptatron.Dialogue
 {
     [CreateAssetMenu(menuName = "New dialogue")]
     public class DialogueScriptableObject : ScriptableObject
@@ -15,7 +15,7 @@ namespace SparuvianConnection.Adoptatron.GUI
 
         private void Awake()
         {
-            _currentIndex = 0;
+            _currentIndex = 1; // The first line is accessed early by the node
         }
 
         public string GetNextLine()

@@ -1,4 +1,5 @@
 ﻿using System;
+using SparuvianConnection.Adoptatron.Dialogue;
 using SparuvianConnection.Adoptatron.Gameplay.Marbles;
 using SparuvianConnection.Adoptatron.Gameplay.Skills;
 
@@ -81,6 +82,15 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public void TriggerAllMarblesStopEvent()
         {
             OnAllMarblesStop?.Invoke();
+        }
+        #endregion
+        
+        #region Action<DialogueNode> OnStartDialogue
+        public event Action<DialogueNode> OnStartDialogue;
+
+        public void TriggerStartDialogueEvent(DialogueNode node)
+        {
+            OnStartDialogue?.Invoke(node);
         }
         #endregion
 
