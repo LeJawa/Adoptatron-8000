@@ -45,6 +45,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
             GameEvents.Instance.OnLoadLevel += HandleLoadLevelEvent;
             GameEvents.Instance.OnLoadNextLevel += HandleLoadNextLevelEvent;
+            GameEvents.Instance.OnLoadLastLevel += HandleLoadLastLevelEvent;
 
             GameEvents.Instance.OnNewSkillPowerUpAvailable += HandleNewSkillPowerUpAvailableEvent;
             GameEvents.Instance.OnSkillPowerUpActivated += HandleSkillPowerUpActivatedEvent;
@@ -68,6 +69,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private void HandleLoadNextLevelEvent()
         {
             _levelManager.LoadNextLevel();
+        }
+
+        private void HandleLoadLastLevelEvent()
+        {
+            _levelManager.LoadLastLevel();
         }
 
         private void HandleLoadLevelEvent(int level)

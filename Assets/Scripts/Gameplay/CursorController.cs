@@ -29,8 +29,14 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         
         private void Update()
         {
+            
             if (!_startingToPull)
             {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    return;
+                }
+                
                 Vector3 mousePosition = Input.mousePosition;
 
                 mousePosition = _cameraMain.ScreenToWorldPoint(mousePosition);

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1489931240427428997}
   - component: {fileID: 7051339697112601515}
   m_Layer: 0
-  m_Name: StartingPullPosition
+  m_Name: Cursor
   m_TagString: Cursor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.04
+  m_Radius: 0.97
 --- !u!114 &7051339697112601515
 MonoBehaviour:
   m_ObjectHideFlags: 0

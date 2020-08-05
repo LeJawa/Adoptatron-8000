@@ -15,7 +15,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private const int StartingCombo = 1;
         private int _numberOfCollisionsInThisRound = 0;
 
-        private const int TotalNumberOfTries = 5;
+        private const int TotalNumberOfTries = 1000;
         private int _currentNumberOfTries = 0;
 
         private Dog _currentDog;
@@ -76,6 +76,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public void LoadNextLevel()
         {
             LoadLevel(Level + 1);
+        }
+
+        public void LoadLastLevel()
+        {
+            LoadLevel(Level - 1);
         }
 
         private IEnumerator LoadLevelCoroutine(int level)

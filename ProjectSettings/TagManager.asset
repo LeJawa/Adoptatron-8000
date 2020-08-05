@@ -10,6 +10,8 @@ TagManager:
   - IOAnimation
   - Cursor
   - Answers
+  - Rewind
+  - Gate
   layers:
   - Default
   - TransparentFX
@@ -21,8 +23,8 @@ TagManager:
   - 
   - Cursor
   - Player
-  - 
-  - 
+  - InteractableObjects
+  - DefaultNoPlayer
   - 
   - 
   - 

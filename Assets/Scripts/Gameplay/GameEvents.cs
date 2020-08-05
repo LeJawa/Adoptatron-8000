@@ -58,6 +58,15 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         }
         #endregion
         
+        #region Action OnLoadLastLevel
+        public event Action OnLoadLastLevel;
+
+        public void TriggerLoadLastLevelEvent()
+        {
+            OnLoadLastLevel?.Invoke();
+        }
+        #endregion
+        
         #region Action<SkillName> OnSkillPowerUpActivated
         public event Action<SkillName> OnSkillPowerUpActivated;
 
