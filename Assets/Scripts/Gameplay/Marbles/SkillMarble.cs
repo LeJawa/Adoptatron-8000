@@ -1,4 +1,5 @@
 ﻿using System;
+using SparuvianConnection.Adoptatron.Audio;
 using SparuvianConnection.Adoptatron.Gameplay.Skills;
 using UnityEngine;
 
@@ -10,8 +11,13 @@ namespace SparuvianConnection.Adoptatron.Gameplay.Marbles
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag("Wall")) return;
+            if (other.gameObject.CompareTag("Wall"))
+            {
+                AudioManager.Play(AudioClipName.HitWall);
+                return;
+            }
             
+            AudioManager.Play(AudioClipName.HitMarble);
             GameEvents.Instance.TriggerMarbleCollisionEvent(this);
         }
     }
