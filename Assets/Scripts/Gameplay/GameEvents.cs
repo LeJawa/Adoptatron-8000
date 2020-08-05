@@ -1,5 +1,7 @@
 ﻿using System;
+using SparuvianConnection.Adoptatron.Dialogue;
 using SparuvianConnection.Adoptatron.Gameplay.Marbles;
+using SparuvianConnection.Adoptatron.Gameplay.Skills;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
@@ -21,9 +23,9 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         #endregion
 
         #region Action<Marble> OnMarbleCollision
-        public event Action<Marble> OnMarbleCollision;
+        public event Action<SkillMarble> OnMarbleCollision;
 
-        public void TriggerMarbleCollisionEvent(Marble marble)
+        public void TriggerMarbleCollisionEvent(SkillMarble marble)
         {
             OnMarbleCollision?.Invoke(marble);
         }
@@ -38,12 +40,57 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         }
         #endregion
         
-        #region Action<int> OnLoadNewLevel
-        public event Action<int> OnLoadNewLevel;
+        #region Action<int> OnLoadLevel
+        public event Action<int> OnLoadLevel;
 
-        public void TriggerLoadNewLevelEvent(int level)
+        public void TriggerLoadLevelEvent(int level)
         {
-            OnLoadNewLevel?.Invoke(level);
+            OnLoadLevel?.Invoke(level);
+        }
+        #endregion
+        
+        #region Action OnLoadNextLevel
+        public event Action OnLoadNextLevel;
+
+        public void TriggerLoadNextLevelEvent()
+        {
+            OnLoadNextLevel?.Invoke();
+        }
+        #endregion
+        
+        #region Action<SkillName> OnSkillPowerUpActivated
+        public event Action<SkillName> OnSkillPowerUpActivated;
+
+        public void TriggerSkillPowerUpActivatedEvent(SkillName skillName)
+        {
+            OnSkillPowerUpActivated?.Invoke(skillName);
+        }
+        #endregion
+        
+        #region Action<SkillName> OnNewSkillPowerUpAvailable
+        public event Action<SkillName> OnNewSkillPowerUpAvailable;
+
+        public void TriggerNewSkillPowerUpAvailableEvent(SkillName skillName)
+        {
+            OnNewSkillPowerUpAvailable?.Invoke(skillName);
+        }
+        #endregion
+        
+        #region Action OnAllMarblesStop
+        public event Action OnAllMarblesStop;
+
+        public void TriggerAllMarblesStopEvent()
+        {
+            OnAllMarblesStop?.Invoke();
+        }
+        #endregion
+        
+        #region Action<DialogueNode> OnStartDialogue
+        public event Action<DialogueNode> OnStartDialogue;
+
+        public void TriggerStartDialogueEvent(DialogueNode node)
+        {
+            OnStartDialogue?.Invoke(node);
         }
         #endregion
 

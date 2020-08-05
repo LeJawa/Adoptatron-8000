@@ -1,17 +1,31 @@
-﻿using SparuvianConnection.Adoptatron.Gameplay.Skills;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SparuvianConnection.Adoptatron.Gameplay.Marbles
 {
     public abstract class Marble : MonoBehaviour
     {
-        public Skill Skill { get; protected set; }
+        protected Rigidbody2D _rb2d;
 
-        private void OnCollisionEnter2D(Collision2D other)
+        protected virtual void Start()
         {
-            if (other.gameObject.CompareTag("Wall")) return;
+            _rb2d = GetComponent<Rigidbody2D>();
             
-            GameEvents.Instance.TriggerMarbleCollisionEvent(this);
+            GameEvents.Instance.OnAllMarblesStop += StopMarbleMovement;
+        }
+
+        public void StopMarbleMovement()
+        {
+            _rb2d.velocity = Vector2.zero;
+        }
+
+        protected void OnDestroy()
+        {
+            GameEvents.Instance.OnAllMarblesStop -= StopMarbleMovement;
+        }
+
+        public void AddForce(Vector2 forceVector)
+        {
+            _rb2d.AddForce(forceVector, ForceMode2D.Impulse);
         }
     }
 }

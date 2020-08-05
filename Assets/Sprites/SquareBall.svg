@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="700"
+   height="700"
+   viewBox="0 0 185.20833 185.20833"
+   version="1.1"
+   id="svg5257"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="SquareBall.svg"
+   inkscape:export-filename="D:\Documentos Luis\Documentos\GameDev\BrackeysGameJam\Assets\Sprites\squareBall.png"
+   inkscape:export-xdpi="17.549999"
+   inkscape:export-ydpi="17.549999">
+  <defs
+     id="defs5251" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="80.574575"
+     inkscape:cy="294.49312"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     fit-margin-top="35"
+     fit-margin-left="35"
+     fit-margin-right="35"
+     fit-margin-bottom="35"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="534"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5254">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(14.420378,34.416961)">
+    <path
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:7.80772066;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-dashoffset:12.00000095;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 350 186.35547 A 163.64472 163.64472 0 0 0 186.35547 350 A 163.64472 163.64472 0 0 0 350 513.64453 A 163.64472 163.64472 0 0 0 513.64453 350 A 163.64472 163.64472 0 0 0 350 186.35547 z M 252.01562 261.10742 L 447.98438 261.10742 L 447.98438 438.89258 L 252.01562 438.89258 L 252.01562 261.10742 z "
+       transform="matrix(0.26458333,0,0,0.26458333,-14.420378,-34.416961)"
+       id="path5815" />
+  </g>
+</svg>

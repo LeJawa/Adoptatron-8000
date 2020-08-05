@@ -5,8 +5,13 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 {
     public class GameInitializer : MonoBehaviour
     {
-        private void Start()
+        public GameObject prefabCursor;
+        
+        
+        private void Awake()
         {
+            Instantiate(prefabCursor);
+            
             ScreenUtils.Initialize();
             GameManager.Instance.Initialize();
             

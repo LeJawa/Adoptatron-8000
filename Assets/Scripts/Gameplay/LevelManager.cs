@@ -3,6 +3,7 @@ using System.Collections;
 using SparuvianConnection.Adoptatron.Gameplay.Marbles;
 using SparuvianConnection.Adoptatron.Gameplay.Skills;
 using SparuvianConnection.Adoptatron.GUI;
+using SparuvianConnection.Adoptatron.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,68 +17,86 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private const int TotalNumberOfTries = 5;
         private int _currentNumberOfTries = 0;
+
+        private Dog _currentDog;
         
         private HUD _hud;
 
-        private PlayerController _playerController;
+        private PlayerMarble _playerMarble;
         
         public int Level { get; private set; }
 
 
-        public LevelManager(int level)
+        public LevelManager(int level, Dog currentDog)
         {
-            InitializeFields(level);
+            Level = level;
+            _currentDog = currentDog;
+            _currentNumberOfTries = 0;
+            
+            FindGameObjectsInScene();
 
             SubscribeToEvents();
 
             ResetCombo();
+            UpdateAllHUDs();
         }
 
-        private void InitializeFields(int level)
+        private void FindGameObjectsInScene()
         {
-            Level = level;
             _hud = GameObject.FindWithTag("HUD").GetComponent<HUD>();
-            _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            _playerMarble = GameObject.FindWithTag("Player").GetComponent<PlayerMarble>();
         }
 
         private void SubscribeToEvents()
         {
             GameEvents.Instance.OnMarbleCollision += HandleMarbleCollisionEvent;
             GameEvents.Instance.OnNewPlayerShot += HandleNewPlayerShotEvent;
+
+            GameEvents.Instance.OnSkillPowerUpActivated += HandleSkillPowerUpActivated;
         }
 
         public void LoadLevel(int level)
         {
-            // SceneManager.LoadScene("Level" + level);
-            //
-            // InitializeFields(level);
-            // ResetCombo();
-
+            Debug.Log("Loading level " + level);
+            
+            GameEvents.Instance.TriggerAllMarblesStopEvent();
+            
+            CoroutineHelper.Instance.StartCoroutine(LoadLevelCoroutine(level));
         }
-        
+
+        public void LoadNextLevel()
+        {
+            LoadLevel(Level + 1);
+        }
+
         private IEnumerator LoadLevelCoroutine(int level)
         {
-            // Start loading the scene
-            AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync("Level" + level, LoadSceneMode.Single);
-            // Wait until the level finish loading
-            while (!asyncLoadLevel.isDone)
-                yield return null;
+            GameManager.Instance.StartEndSceneAnimation();
+            yield return new WaitForSeconds(1.5f);
+            
+            yield return SceneManager.LoadSceneAsync("Level" + level, LoadSceneMode.Single);
             // Wait a frame so every Awake and Start method is called
             yield return new WaitForEndOfFrame();
-            
-            InitializeFields(level);
+
+            Level = level;
+            _currentNumberOfTries = 0;
+            FindGameObjectsInScene();
+            GameManager.Instance.FindGameObjectsInScene();
             ResetCombo();
+            
+            UpdateAllHUDs();
         }
-        
+
 
         private void HandleNewPlayerShotEvent()
         {
             _currentNumberOfTries++;
             ResetCombo();
-
+            UpdateComboHUD();
+            
             if (_currentNumberOfTries >= TotalNumberOfTries)
             {
-                _playerController.CannotShootAnymore();
+                _playerMarble.CannotShootAnymore();
             }
         }
 
@@ -85,11 +104,9 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         {
             _currentCombo = StartingCombo;
             _numberOfCollisionsInThisRound = 0;
-            
-            UpdateComboHUD();
         }
-        
-        private void HandleMarbleCollisionEvent(Marble marble)
+
+        private void HandleMarbleCollisionEvent(SkillMarble marble)
         {
             Debug.Log("Skill " + marble.Skill.Name.ToString() + " with mastery " + marble.Skill.Mastery);
 
@@ -99,7 +116,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             GameManager.Instance.CurrentDog.UpdateSkill(marble.Skill, _currentCombo);
             UpdateHUDOfSkill(marble.Skill.Name);
         }
-        
+
         private void CalculateAndUpdateCombo()
         {
             if (_numberOfCollisionsInThisRound < 2)
@@ -125,35 +142,40 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             
             UpdateComboHUD();
         }
-        
+
         private void UpdateHUDOfSkill(SkillName skillName)
         {
-            switch (skillName)
-            {
-                case SkillName.Sit:
-                    UpdateSitSkillHUD();
-                    break;
-                case SkillName.Come:
-                    UpdateComeSkillHUD();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(skillName), skillName, null);
-            }
+            _hud.ChangeSkillMasteryTo(skillName, _currentDog.GetMasteryOfSkill(skillName));
         }
 
         private void UpdateSitSkillHUD()
         {
-            _hud.ChangeSitSkillMasteryTo(GameManager.Instance.CurrentDog.GetMasteryOfSkill(SkillName.Sit));
+            UpdateHUDOfSkill(SkillName.Sit);
         }
-        
+
         private void UpdateComeSkillHUD()
         {
-            _hud.ChangeComeSkillMasteryTo(GameManager.Instance.CurrentDog.GetMasteryOfSkill(SkillName.Come));
+            UpdateHUDOfSkill(SkillName.Come);
         }
 
         private void UpdateComboHUD()
         {
             _hud.ChangeComboTo(_currentCombo);
+        }
+
+        private void UpdateAllHUDs()
+        {
+            UpdateSitSkillHUD();
+            UpdateComeSkillHUD();
+            UpdateComboHUD();
+        }
+
+        private void HandleSkillPowerUpActivated(SkillName skillName)
+        {
+            if (skillName == SkillName.Sit)
+            {
+                GameEvents.Instance.TriggerAllMarblesStopEvent();
+            }
         }
     }
 }

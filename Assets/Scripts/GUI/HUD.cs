@@ -1,24 +1,41 @@
-﻿using SparuvianConnection.Adoptatron.Gameplay;
+﻿using System;
+using SparuvianConnection.Adoptatron.Gameplay;
+using SparuvianConnection.Adoptatron.Gameplay.Skills;
+using SparuvianConnection.Adoptatron.Utils;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace SparuvianConnection.Adoptatron.GUI
 {
     public class HUD : MonoBehaviour
     {
-        public TMP_Text sitSkillText;
-        public TMP_Text comeSkillText;
-        public TMP_Text comboText;
-        
-        public void ChangeSitSkillMasteryTo(int mastery)
+        [Serializable]
+        public struct SkillGUI
         {
-            sitSkillText.text = "Sit: " + mastery;
+            public Button Button;
+            public SkillName Name;
+            public TMP_Text textObject;
+
+            public SkillGUI(Button button, TMP_Text textObject, SkillName name)
+            {
+                this.Button = button;
+                this.textObject = textObject;
+                this.Name = name;
+            }
         }
         
-        public void ChangeComeSkillMasteryTo(int mastery)
+        public TMP_Text comboText;
+
+        public SkillGUIDictionary skillGUIDictionary;
+        
+        public Sprite skillReadyButtonSprite;
+
+
+        public void ChangeSkillMasteryTo(SkillName skillName, int mastery)
         {
-            comeSkillText.text = "Come: " + mastery;
+            var skillGUI = skillGUIDictionary[skillName];
+            skillGUI.textObject.text = " " + skillGUI.Name.ToString() + ": " + mastery;
         }
 
         public void ChangeComboTo(int combo)
@@ -28,7 +45,53 @@ namespace SparuvianConnection.Adoptatron.GUI
 
         public void HandleNextLevelButtonPressed()
         {
-            GameEvents.Instance.TriggerLoadNewLevelEvent(2);
+            GameEvents.Instance.TriggerLoadNextLevelEvent();
+        }
+
+        public void HandleSitSkillButtonPressed()
+        {
+            GameEvents.Instance.TriggerSkillPowerUpActivatedEvent(SkillName.Sit);
+        }
+
+        public void HandleComeSkillButtonPressed()
+        {
+            GameEvents.Instance.TriggerSkillPowerUpActivatedEvent(SkillName.Come);
+        }
+
+        private void SetSkillButtonInteractableTo(SkillName skillName, bool state)
+        {
+            MakeSureTheSkillButtonExists(skillName);
+
+            skillGUIDictionary[skillName].Button.interactable = state;
+
+            skillGUIDictionary[skillName].Button.image.sprite = state ? skillReadyButtonSprite : null;
+            skillGUIDictionary[skillName].Button.image.color = state ? Color.white : new Color(0, 0, 0, 0);
+        }
+
+        private void MakeSureTheSkillButtonExists(SkillName skillName)
+        {
+            if (SkillButtonIsNotAvailable(skillName))
+            {
+                // ReSharper disable once NotAccessedVariable
+                SkillGUI skillGui = skillGUIDictionary[skillName];
+                string objectName = skillName + "SkillButton";
+                skillGui.Button = GameObject.Find(objectName).GetComponent<Button>();
+            }
+        }
+
+        private bool SkillButtonIsNotAvailable(SkillName skillName)
+        {
+            return skillGUIDictionary[skillName].Button == null;
+        }
+
+        public void ActivateSkillButton(SkillName skillName)
+        {
+            SetSkillButtonInteractableTo(skillName, true);
+        }
+
+        public void DeactivateSkillButton(SkillName skillName)
+        {
+            SetSkillButtonInteractableTo(skillName, false);
         }
     }
 }

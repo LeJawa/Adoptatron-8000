@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using SparuvianConnection.Adoptatron.Gameplay.Skills;
-using UnityEngine;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
-    public class Dog : MonoBehaviour
+    public class Dog
     {
         private Dictionary<SkillName, Skill> _dictionaryOfSkills;
 
-        private void Start()
+        public Dog()
         {
             _dictionaryOfSkills = new Dictionary<SkillName, Skill>();
 
@@ -24,6 +23,16 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public void UpdateSkill(Skill skill, int comboMultiplier)
         {
             _dictionaryOfSkills[skill.Name].IncreaseMasteryByAmount(skill.Mastery * comboMultiplier);
+
+            if (MasteryIsEnoughToReachPowerUp(skill.Name))
+            {
+                GameEvents.Instance.TriggerNewSkillPowerUpAvailableEvent(skill.Name);
+            }
+        }
+
+        private bool MasteryIsEnoughToReachPowerUp(SkillName skillName)
+        {
+            return true;
         }
 
         public int GetMasteryOfSkill(SkillName skill)
