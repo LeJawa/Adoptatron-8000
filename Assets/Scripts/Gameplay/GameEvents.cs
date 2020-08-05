@@ -93,6 +93,15 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             OnStartDialogue?.Invoke(node);
         }
         #endregion
+        
+        #region Action OnRewindStart
+        public event Action OnRewindStart;
+
+        public void TriggerRewindStartEvent()
+        {
+            OnRewindStart?.Invoke();
+        }
+        #endregion
 
     }
 }

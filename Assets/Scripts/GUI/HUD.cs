@@ -93,5 +93,10 @@ namespace SparuvianConnection.Adoptatron.GUI
         {
             SetSkillButtonInteractableTo(skillName, false);
         }
+
+        public void HandleRewindButtonPressed()
+        {
+            GameEvents.Instance.TriggerRewindStartEvent();
+        }
     }
 }

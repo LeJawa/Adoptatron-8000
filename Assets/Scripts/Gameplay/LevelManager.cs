@@ -24,6 +24,8 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private PlayerMarble _playerMarble;
         
+        private RewindManager _rewindManager;
+        
         public int Level { get; private set; }
 
 
@@ -45,6 +47,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         {
             _hud = GameObject.FindWithTag("HUD").GetComponent<HUD>();
             _playerMarble = GameObject.FindWithTag("Player").GetComponent<PlayerMarble>();
+            _rewindManager = GameObject.FindWithTag("Rewind").GetComponent<RewindManager>();
         }
 
         private void SubscribeToEvents()
@@ -53,6 +56,12 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             GameEvents.Instance.OnNewPlayerShot += HandleNewPlayerShotEvent;
 
             GameEvents.Instance.OnSkillPowerUpActivated += HandleSkillPowerUpActivated;
+            GameEvents.Instance.OnRewindStart += RewindLevel;
+        }
+
+        public void RewindLevel()
+        {
+            _rewindManager.StartRewind();
         }
 
         public void LoadLevel(int level)
@@ -90,6 +99,8 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private void HandleNewPlayerShotEvent()
         {
+            _rewindManager.StartRecording();
+            
             _currentNumberOfTries++;
             ResetCombo();
             UpdateComboHUD();

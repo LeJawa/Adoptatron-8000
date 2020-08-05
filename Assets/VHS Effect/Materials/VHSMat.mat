@@ -72,9 +72,9 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OffsetColor: 0.00037
-    - _OffsetDistortion: 8656
-    - _OffsetNoiseX: 0.5209847
-    - _OffsetNoiseY: 7.4793134
+    - _OffsetDistortion: 6362
+    - _OffsetNoiseX: 0.19090773
+    - _OffsetNoiseY: 7.243843
     - _OffsetPosY: 0
     - _Parallax: 0.02
     - _ScanLines: 2

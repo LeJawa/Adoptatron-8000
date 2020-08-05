@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
-    public class MovementController : MonoBehaviour
+    public class CursorController : MonoBehaviour
     {
         private Camera _cameraMain;
         
