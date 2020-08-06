@@ -284,7 +284,7 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 617695574656211982}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &615798570
+--- !u!1001 &638320778
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -329,7 +329,7 @@ PrefabInstance:
     - target: {fileID: 1390488738725638671, guid: 879a230547ad66745bd2fec21765e641,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1390488738725638671, guid: 879a230547ad66745bd2fec21765e641,
         type: 3}
@@ -3852,7 +3852,7 @@ PrefabInstance:
     - target: {fileID: 557761909565041336, guid: 050e03d1d33876e4ab3c70ff92667b8e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 557761909565041336, guid: 050e03d1d33876e4ab3c70ff92667b8e,
         type: 3}
@@ -3878,6 +3878,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 617695574279545968, guid: 231e386f50284f44e89c65d298d3e7fb,
+        type: 3}
+      propertyPath: _hardScan
+      value: -8
+      objectReference: {fileID: 0}
     - target: {fileID: 617695574279545969, guid: 231e386f50284f44e89c65d298d3e7fb,
         type: 3}
       propertyPath: m_BackGroundColor.r
@@ -4273,7 +4278,7 @@ PrefabInstance:
     - target: {fileID: 8867001677869766028, guid: 0f5f8269404c84a4eae7bff324d54280,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8867001677869766028, guid: 0f5f8269404c84a4eae7bff324d54280,
         type: 3}
