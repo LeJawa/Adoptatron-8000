@@ -698,6 +698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 395612273}
+  _dialogueNode: {fileID: 11400000, guid: 678387faffa09a740bb1bce4236a813c, type: 2}
 --- !u!4 &2042186386
 Transform:
   m_ObjectHideFlags: 0

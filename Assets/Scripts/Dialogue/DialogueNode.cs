@@ -33,6 +33,12 @@ namespace SparuvianConnection.Adoptatron.Dialogue
             return message;
         }
 
+        public void StartDialogueFromBeginning()
+        {
+            _endOfDialogue = false;
+            _dialogue.Initialize();
+        }
+
         private void ShowAnswers()
         {
             foreach (AnswerEnum answer in answersDictionary.Keys)

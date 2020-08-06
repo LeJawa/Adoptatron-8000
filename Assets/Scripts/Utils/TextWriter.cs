@@ -106,7 +106,7 @@ namespace SparuvianConnection.Adoptatron.Utils
 
                         if (visibleCursor)
                         {
-                            DrawCursor(text);
+                            DrawTextWithCursor(text);
                         }
                         else
                         {
@@ -138,7 +138,7 @@ namespace SparuvianConnection.Adoptatron.Utils
 
             }
 
-            private void DrawCursor(string text)
+            private void DrawTextWithCursor(string text)
             {
                 uiText.text = text;
                 uiText.ForceMeshUpdate();
@@ -163,7 +163,7 @@ namespace SparuvianConnection.Adoptatron.Utils
                 }
                 else
                 {
-                    DrawCursor(textToWrite);
+                    DrawTextWithCursor(textToWrite);
                     _currentlyDisplayingCursor = true;
                 }
                 
@@ -186,7 +186,7 @@ namespace SparuvianConnection.Adoptatron.Utils
             }
 
             public void WriteAllAndDestroy() {
-                uiText.text = textToWrite + _cursorCharacter;
+                DrawTextWithCursor(textToWrite);
                 characterIndex = textToWrite.Length;
                 if (onComplete != null) onComplete();
                 

@@ -7,28 +7,45 @@ namespace SparuvianConnection.Adoptatron.Dialogue
     public class DialogueScriptableObject : ScriptableObject
     {
         
-        [TextArea]
-        public string[] dialogueLinesArray;
+        [NonSerialized]
+        public string[] _dialogueLinesArray;
+
+        [TextArea(20, 50)] public string dialogueText;
 
         [NonSerialized]
         private int _currentIndex = 0;
 
-        private void Awake()
+        public void Initialize()
         {
+            ParseDialogueText();
             _currentIndex = 0;
+        }
+
+        private void ParseDialogueText()
+        {
+            if (_dialogueLinesArray != null) return;
+            
+            _dialogueLinesArray = dialogueText.Split(new string[] {Environment.NewLine, "\n"},
+                StringSplitOptions.RemoveEmptyEntries);
+
         }
 
         public string GetNextLine()
         {
-            if (_currentIndex >= dialogueLinesArray.Length) return null;
+            if (_dialogueLinesArray == null)
+            {
+                Initialize();
+            }
+            
+            if (_currentIndex >= _dialogueLinesArray.Length) return null;
             
             _currentIndex++;
-            return dialogueLinesArray[_currentIndex - 1];
+            return _dialogueLinesArray[_currentIndex - 1];
         }
 
         public string SeeNextLine()
         {
-            return _currentIndex < dialogueLinesArray.Length ? dialogueLinesArray[_currentIndex] : null;
+            return _currentIndex < _dialogueLinesArray.Length ? _dialogueLinesArray[_currentIndex] : null;
         }
         
 

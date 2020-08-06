@@ -10,11 +10,11 @@ namespace SparuvianConnection.Adoptatron.Dialogue
         public TMP_Text text;
         private TextWriter.TextWriterSingle textWriterSingle;
 
-        private DialogueNode _dialogueNode;
+        public DialogueNode _dialogueNode;
 
         private void Start()
         {
-            _dialogueNode = Resources.Load<DialogueNode>(@"Nodes\node1");
+            // _dialogueNode = Resources.Load<DialogueNode>(@"Nodes\node1");
 
             GameEvents.Instance.OnStartDialogue += StartNewDialogue;
         }
@@ -22,6 +22,7 @@ namespace SparuvianConnection.Adoptatron.Dialogue
         private void StartNewDialogue(DialogueNode dialogue)
         {
             _dialogueNode = dialogue;
+            _dialogueNode.StartDialogueFromBeginning();
 
             RemoveAnswers();
             
