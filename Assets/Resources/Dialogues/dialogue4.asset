@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e04a3f103f494dabe6c3edee88b21c, type: 3}
   m_Name: dialogue4
   m_EditorClassIdentifier: 
-  dialogueText: 
+  dialogueText: 'Great!
+
+    Here we go!
+
+'
