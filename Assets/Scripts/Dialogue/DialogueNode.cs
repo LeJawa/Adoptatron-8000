@@ -1,4 +1,6 @@
 ﻿using System;
+using SparuvianConnection.Adoptatron.Gameplay;
+using SparuvianConnection.Adoptatron.States;
 using SparuvianConnection.Adoptatron.Utils;
 using UnityEngine;
 using UnityEngine.Events;
@@ -37,6 +39,8 @@ namespace SparuvianConnection.Adoptatron.Dialogue
         {
             _endOfDialogue = false;
             _dialogue.Initialize();
+            
+            GameEvents.Instance.TriggerDialogueStateChangeEvent(new NormalDialogue());
         }
 
         private void ShowAnswers()
@@ -45,6 +49,8 @@ namespace SparuvianConnection.Adoptatron.Dialogue
             {
                 Answer.GetAnswerFromEnum(answer).DrawAnswerButton(answersDictionary[answer]);
             }
+            
+            GameEvents.Instance.TriggerDialogueStateChangeEvent(new WaitingForAnswers());
         }
     }
 }

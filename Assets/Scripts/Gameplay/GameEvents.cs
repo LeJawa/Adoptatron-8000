@@ -2,6 +2,7 @@
 using SparuvianConnection.Adoptatron.Dialogue;
 using SparuvianConnection.Adoptatron.Gameplay.Marbles;
 using SparuvianConnection.Adoptatron.Gameplay.Skills;
+using SparuvianConnection.Adoptatron.States;
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
@@ -109,6 +110,15 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public void TriggerRewindStartEvent()
         {
             OnRewindStart?.Invoke();
+        }
+        #endregion
+        
+        #region Action<State> OnDialogueStateChange
+        public event Action<DialogueState> OnDialogueStateChange;
+
+        public void TriggerDialogueStateChangeEvent(DialogueState state)
+        {
+            OnDialogueStateChange?.Invoke(state);
         }
         #endregion
 

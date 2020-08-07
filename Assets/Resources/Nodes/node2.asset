@@ -39,5 +39,5 @@ MonoBehaviour:
     _keyValues: 0000000001000000
     _keys: 0000000001000000
     _values:
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 6e8895491e035f14cbc9d64f0a62ce24, type: 2}
     - {fileID: 11400000, guid: 678387faffa09a740bb1bce4236a813c, type: 2}
