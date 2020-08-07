@@ -14,6 +14,8 @@ namespace SparuvianConnection.Adoptatron.Dialogue
 
         public AnswerDialogueDictionary answersDictionary;
 
+        public DialogueEndAction onDialogueEnd;
+
         [NonSerialized] private bool _endOfDialogue = false;
 
         public string GetNextLine()
@@ -29,7 +31,11 @@ namespace SparuvianConnection.Adoptatron.Dialogue
             if (nextLine == null)
             {
                 ShowAnswers();
+
+                GameEvents.Instance.TriggerDialogueEndSetActionEvent(onDialogueEnd);
+                
                 _endOfDialogue = true;
+
             }
 
             return message;

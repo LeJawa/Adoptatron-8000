@@ -1,4 +1,6 @@
-﻿using SparuvianConnection.Adoptatron.Gameplay.Skills;
+﻿using System;
+using SparuvianConnection.Adoptatron.Dialogue;
+using SparuvianConnection.Adoptatron.Gameplay.Skills;
 using SparuvianConnection.Adoptatron.GUI;
 using UnityEngine;
 
@@ -30,11 +32,6 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private LevelManager _levelManager;
         public Dog CurrentDog => _currentDog;
-        
-        private Animator _animationAnim;
-        private static readonly int End = Animator.StringToHash("end");
-
-        public Animator Animator => _animationAnim;
 
         private GameManager()
         {
@@ -49,6 +46,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
             GameEvents.Instance.OnNewSkillPowerUpAvailable += HandleNewSkillPowerUpAvailableEvent;
             GameEvents.Instance.OnSkillPowerUpActivated += HandleSkillPowerUpActivatedEvent;
+        }
+
+        public void StartGameplay()
+        {
+            _levelManager.LoadLevel(1);
         }
 
         public void FindGameObjectsInScene()
@@ -88,25 +90,6 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             _initialized = true;
         }
 
-        public void StartEndSceneAnimation()
-        {
-            Time.timeScale = 1;
-            if (_animationAnim == null)
-            {
-                InitializeSceneAnimator();
-            }
-
-            _animationAnim.SetTrigger(End);
-        }
-
-        public void InitializeSceneAnimator() {
-            _animationAnim = GameObject.FindGameObjectWithTag("IOAnimation").GetComponent<Animator>();
-        }
-        
-
-        
-
-        
         
     }
 }

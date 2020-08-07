@@ -39,3 +39,4 @@ MonoBehaviour:
     _keyValues: 
     _keys: 
     _values: []
+  onDialogueEnd: 1

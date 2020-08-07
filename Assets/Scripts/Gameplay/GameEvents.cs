@@ -121,6 +121,15 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             OnDialogueStateChange?.Invoke(state);
         }
         #endregion
+        
+        #region Action<DialogueEndAction> OnDialogueEndSetAction
+        public event Action<DialogueEndAction> OnDialogueEndSetAction;
+
+        public void TriggerDialogueEndSetActionEvent(DialogueEndAction action)
+        {
+            OnDialogueEndSetAction?.Invoke(action);
+        }
+        #endregion
 
     }
 }
