@@ -22,7 +22,11 @@ namespace SparuvianConnection.Adoptatron.Dialogue
 
         private bool _showingHints = false;
 
-        private void Start()
+        private bool _hasStartedTalking = false;
+        private float _startTimer = 0f;
+        private float _timeBeforeStartTalking = 1f;
+
+        protected virtual void Start()
         {
             GameEvents.Instance.OnStartDialogue += StartNewDialogue;
             GameEvents.Instance.OnDialogueStateChange += ChangeDialogueState;
@@ -74,6 +78,20 @@ namespace SparuvianConnection.Adoptatron.Dialogue
 
         private void Update()
         {
+            if (!_hasStartedTalking)
+            {
+                if (_startTimer > _timeBeforeStartTalking)
+                {
+                    ShowNextLine();
+                    _hasStartedTalking = true;
+                }
+                else
+                {
+                    _startTimer += Time.deltaTime;
+                }
+                return;
+            }
+            
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 ShowNextLine();

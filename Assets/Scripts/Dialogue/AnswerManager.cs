@@ -1,4 +1,5 @@
-﻿using SparuvianConnection.Adoptatron.Gameplay;
+﻿using SparuvianConnection.Adoptatron.Audio;
+using SparuvianConnection.Adoptatron.Gameplay;
 using UnityEngine;
 
 namespace SparuvianConnection.Adoptatron.Dialogue
@@ -37,6 +38,7 @@ namespace SparuvianConnection.Adoptatron.Dialogue
         
         public void HandleYesAnswerSelected()
         {
+            AudioManager.Play(AudioClipName.Select);
             GameEvents.Instance.TriggerStartDialogueEvent(_yesNode);
         }
         #endregion
@@ -50,6 +52,7 @@ namespace SparuvianConnection.Adoptatron.Dialogue
         
         public void HandleNoAnswerSelected()
         {
+            AudioManager.Play(AudioClipName.Select);
             GameEvents.Instance.TriggerStartDialogueEvent(_noNode);
         }
         #endregion

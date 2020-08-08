@@ -33,6 +33,8 @@ namespace SparuvianConnection.Adoptatron.Audio
                 Resources.Load<AudioClip>(@"Audio\bg_music"));
             _audioClips.Add(AudioClipName.HitWall,
                 Resources.Load<AudioClip>(@"Audio\hitWall"));
+            _audioClips.Add(AudioClipName.Select,
+                Resources.Load<AudioClip>(@"Audio\select"));
 
 
             _initialized = true;

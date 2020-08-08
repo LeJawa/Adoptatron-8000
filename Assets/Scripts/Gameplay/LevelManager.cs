@@ -6,6 +6,7 @@ using SparuvianConnection.Adoptatron.GUI;
 using SparuvianConnection.Adoptatron.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+// ReSharper disable AccessToStaticMemberViaDerivedType
 
 namespace SparuvianConnection.Adoptatron.Gameplay
 {
@@ -25,7 +26,9 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private PlayerMarble _playerMarble;
         
         private RewindManager _rewindManager;
-        
+
+        private DateTime _levelTimer = new DateTime();
+
         public int Level { get; private set; }
 
 
@@ -61,6 +64,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         public void RewindLevel()
         {
+            _currentDog.AddRewindCount();
             _rewindManager.StartRewind();
         }
 
@@ -69,8 +73,20 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             Debug.Log("Loading level " + level);
             
             GameEvents.Instance.TriggerAllMarblesStopEvent();
-            
+
+            CalculateTimeSpentInLevel();
+
+
             CoroutineHelper.Instance.StartCoroutine(LoadLevelCoroutine(level));
+        }
+
+        private void CalculateTimeSpentInLevel()
+        {
+            var timeNow = DateTime.Now;
+
+            var timeSpan = timeNow.Subtract(_levelTimer);
+
+            _currentDog.AddToTotalTime((float) timeSpan.TotalSeconds);
         }
 
         public void LoadNextLevel()
@@ -114,6 +130,8 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             {
                 _playerMarble.CannotShootAnymore();
             }
+
+            _levelTimer = DateTime.Now;
         }
 
         private void ResetCombo()
@@ -192,6 +210,29 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             {
                 GameEvents.Instance.TriggerAllMarblesStopEvent();
             }
+        }
+
+        public void EndGame()
+        {
+            CalculateTimeSpentInLevel();
+            
+            CoroutineHelper.Instance.StartCoroutine(EndGameCoroutine());
+        }
+
+        private IEnumerator EndGameCoroutine()
+        {
+            GameObject dogDataGO = GameObject.Instantiate(new GameObject("DogData"));
+            GameObject.DontDestroyOnLoad(dogDataGO);
+            
+            DogData dogData = dogDataGO.AddComponent<DogData>();
+            dogData.Dog = _currentDog;
+            
+            AnimationManager.Instance.StartEndSceneAnimation();
+            yield return new WaitForSeconds(1.5f);
+
+            SceneManager.LoadScene("Scenes/EndDialogue");
+
+
         }
     }
 }

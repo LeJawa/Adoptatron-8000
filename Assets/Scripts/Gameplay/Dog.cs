@@ -7,6 +7,9 @@ namespace SparuvianConnection.Adoptatron.Gameplay
     {
         private Dictionary<SkillName, Skill> _dictionaryOfSkills;
 
+        public int RewindCount { get; private set; }
+        public float TotalTime { get; private set; }
+
         public Dog()
         {
             _dictionaryOfSkills = new Dictionary<SkillName, Skill>();
@@ -38,6 +41,16 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public int GetMasteryOfSkill(SkillName skill)
         {
             return _dictionaryOfSkills[skill].Mastery;
+        }
+
+        public void AddRewindCount()
+        {
+            RewindCount++;
+        }
+
+        public void AddToTotalTime(float time)
+        {
+            TotalTime += time;
         }
         
     }

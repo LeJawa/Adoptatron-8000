@@ -7,6 +7,7 @@
     {
         HitWall,
         HitMarble,
-        BackgroundMusic
+        BackgroundMusic,
+        Select
     }
 }

@@ -43,9 +43,15 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             GameEvents.Instance.OnLoadLevel += HandleLoadLevelEvent;
             GameEvents.Instance.OnLoadNextLevel += HandleLoadNextLevelEvent;
             GameEvents.Instance.OnLoadLastLevel += HandleLoadLastLevelEvent;
+            GameEvents.Instance.OnEndGateCrossed += HandleEndGateCrossed;
 
             GameEvents.Instance.OnNewSkillPowerUpAvailable += HandleNewSkillPowerUpAvailableEvent;
             GameEvents.Instance.OnSkillPowerUpActivated += HandleSkillPowerUpActivatedEvent;
+        }
+
+        private void HandleEndGateCrossed()
+        {
+            _levelManager.EndGame();
         }
 
         public void StartGameplay()

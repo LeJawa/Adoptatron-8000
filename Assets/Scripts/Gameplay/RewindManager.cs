@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SparuvianConnection.Adoptatron.Utils;
 using UnityEngine;
 
@@ -18,14 +19,17 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private float _timer = 0;
         private float _timeBetweenRecordings = 1f;
 
+        private float _maxRewindDeltaTime = 0.1f;
         private float _rewindDeltaTime = 0.1f;
+
+        public float rewindTime = 5f;
 
         private void Start()
         {
-            Initalize(0.2f);
+            Initialize(0.2f);
         }
 
-        public void Initalize(float timeBetweenRecordings)
+        public void Initialize(float timeBetweenRecordings)
         {
             _timeBetweenRecordings = timeBetweenRecordings;
             
@@ -92,6 +96,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private IEnumerator RewindCoroutine()
         {
             Time.timeScale = 0;
+
+            _rewindDeltaTime = rewindTime / _positionRecords[_positionRecords.Keys.First()].Count;
+
+            _rewindDeltaTime = _rewindDeltaTime > _maxRewindDeltaTime ? _maxRewindDeltaTime : _rewindDeltaTime;
+            
             WaitForSecondsRealtime wait = new WaitForSecondsRealtime(_rewindDeltaTime);
 
             while (_numberOfRecords > 0)

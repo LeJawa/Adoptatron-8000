@@ -130,6 +130,16 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             OnDialogueEndSetAction?.Invoke(action);
         }
         #endregion
+        
+        #region Action OnEndGateCrossed
+        public event Action OnEndGateCrossed;
+
+        public void TriggerEndGateCrossedEvent()
+        {
+            OnEndGateCrossed?.Invoke();
+        }
+        #endregion
+        
 
     }
 }
