@@ -21,6 +21,7 @@ namespace SparuvianConnection.Adoptatron.Menu
 
         public void StartGame()
         {
+            AudioManager.Play(AudioClipName.Select);
             StartCoroutine(StartGameCoroutine());
         }
 

@@ -4,7 +4,7 @@
     {
         DoNothing,
         StartGameplay,
-        placeholder2,
+        EndGame,
         placeholder3
     }
 }

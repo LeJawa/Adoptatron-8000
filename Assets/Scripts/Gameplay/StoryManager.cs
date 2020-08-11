@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using SparuvianConnection.Adoptatron.Audio;
 using SparuvianConnection.Adoptatron.Dialogue;
 using SparuvianConnection.Adoptatron.Utils;
 using UnityEngine;
@@ -39,12 +40,36 @@ namespace SparuvianConnection.Adoptatron.Gameplay
                 case DialogueEndAction.StartGameplay:
                     StartGameplay();
                     break;
+                case DialogueEndAction.EndGame:
+                    EndGame();
+                    break;
             }
+        }
+
+        private void EndGame()
+        {
+            GoToInfoMenu();
+        }
+        
+        public void GoToInfoMenu()
+        {
+            AudioManager.Play(AudioClipName.Select);
+            CoroutineHelper.Instance.StartCoroutine(GoToInfoMenuCoroutine());
+        }
+
+        private IEnumerator GoToInfoMenuCoroutine()
+        {
+            yield return new WaitForSeconds(2f);
+            AnimationManager.Instance.StartEndSceneAnimation();
+            yield return new WaitForSeconds(1.5f);
+            
+            SceneManager.LoadScene("Scenes/InfoMenu");
         }
 
         private void StartGameplay()
         {
-            CoroutineHelper.Instance.StartCoroutine(StartGameplayCoroutine());
+            GameManager.Instance.StartGameplay();
+            // CoroutineHelper.Instance.StartCoroutine(StartGameplayCoroutine());
         }
 
         private IEnumerator StartGameplayCoroutine()

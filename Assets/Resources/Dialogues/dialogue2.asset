@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e04a3f103f494dabe6c3edee88b21c, type: 3}
   m_Name: dialogue2
   m_EditorClassIdentifier: 
-  dialogueText: "Great!\r\nHere is a list of all the puppies in our care\r\n\u2026\r\nWait
-    a second!\r\nHow do I know that you deserve the privilege to own one of our adorable
-    creatures?\r\n\u2026\r\n(I wonder)\r\n(What about a test of some sort?)\r\n(Yes)\r\n(YES)\r\nYES!\r\nOups,sorry,
-    did you hear that?\r\nNevermind it\r\nI am going to start a test\nAre you ready?\n\n\n"
+  dialogueText: "Great!\nHere is a list of all the puppies in our care\n\u2026\nWait
+    a second!\nHow do I know that you deserve the privilege to own one of our adorable
+    creatures?\n\u2026\n(I wonder)\n(What about a test of some sort?)\n(Yes)\n(YES)\nYES!\nOups,sorry,
+    did you hear that?\nNevermind it\nI am going to perform a personality test\nAre
+    you ready?\n\n\n"

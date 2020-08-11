@@ -19,8 +19,9 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private void PopulateDictionaryOfSkills()
         {
-            _dictionaryOfSkills.Add(SkillName.Sit, new Sit());
-            _dictionaryOfSkills.Add(SkillName.Come, new Come());
+            _dictionaryOfSkills.Add(SkillName.Patience, new Patience());
+            _dictionaryOfSkills.Add(SkillName.MPatience, new MPatience());
+            _dictionaryOfSkills.Add(SkillName.EMPatience, new EMPatience());
         }
 
         public void UpdateSkill(Skill skill, int comboMultiplier)
@@ -35,7 +36,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private bool MasteryIsEnoughToReachPowerUp(SkillName skillName)
         {
-            return true;
+            if (_dictionaryOfSkills[skillName].Mastery != 0 && _dictionaryOfSkills[skillName].Mastery%10 == 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public int GetMasteryOfSkill(SkillName skill)

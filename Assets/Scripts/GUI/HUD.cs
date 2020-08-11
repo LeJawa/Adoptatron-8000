@@ -26,6 +26,7 @@ namespace SparuvianConnection.Adoptatron.GUI
         }
         
         public TMP_Text comboText;
+        public TMP_Text shotsLeftText;
 
         public SkillGUIDictionary skillGUIDictionary;
         
@@ -35,7 +36,7 @@ namespace SparuvianConnection.Adoptatron.GUI
         public void ChangeSkillMasteryTo(SkillName skillName, int mastery)
         {
             var skillGUI = skillGUIDictionary[skillName];
-            skillGUI.textObject.text = " " + skillGUI.Name.ToString() + ": " + mastery;
+            skillGUI.textObject.text = " " + SkillNameExtensions.ToString(skillGUI.Name) + ": " + mastery;
         }
 
         public void ChangeComboTo(int combo)
@@ -43,19 +44,29 @@ namespace SparuvianConnection.Adoptatron.GUI
             comboText.text = "Combo: " + combo;
         }
 
+        public void ChangeShotsLeftTo(int shotsLeft)
+        {
+            shotsLeftText.text = "Shots left: " + shotsLeft;
+        }
+
         public void HandleNextLevelButtonPressed()
         {
             GameEvents.Instance.TriggerLoadNextLevelEvent();
         }
 
-        public void HandleSitSkillButtonPressed()
+        public void HandlePatienceSkillButtonPressed()
         {
-            GameEvents.Instance.TriggerSkillPowerUpActivatedEvent(SkillName.Sit);
+            GameEvents.Instance.TriggerSkillPowerUpActivatedEvent(SkillName.Patience);
         }
 
-        public void HandleComeSkillButtonPressed()
+        public void HandleMPatienceSkillButtonPressed()
         {
-            GameEvents.Instance.TriggerSkillPowerUpActivatedEvent(SkillName.Come);
+            GameEvents.Instance.TriggerSkillPowerUpActivatedEvent(SkillName.MPatience);
+        }
+
+        public void HandleEMPatienceSkillButtonPressed()
+        {
+            GameEvents.Instance.TriggerSkillPowerUpActivatedEvent(SkillName.EMPatience);
         }
 
         private void SetSkillButtonInteractableTo(SkillName skillName, bool state)

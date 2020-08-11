@@ -18,6 +18,8 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private LineRenderer _trajectory;
 
         private PlayerMarble _playerMarble;
+
+        private bool _colliding = false;
         
         private void Start()
         {
@@ -29,12 +31,46 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         
         private void Update()
         {
+#if UNITY_ANDROID
+            if (Input.touchCount <= 0) return;
+            
+            Touch touch = Input.GetTouch(0);
             
             if (!_startingToPull)
             {
-                if (Input.GetMouseButtonDown(0))
+                    if (touch.phase == TouchPhase.Began && _playerMarble.CanShoot)
+                    {
+                        StartPulling();
+                        return;
+                    }
+            }
+            else
+            {
+                if (_startingToPull && touch.phase == TouchPhase.Ended)
                 {
-                    return;
+                    ReleaseBall();
+                }
+                else if (touch.phase == TouchPhase.Moved)
+                {
+                    UpdatePullDirection();
+                }
+            }
+            
+#else
+            if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+            {
+                GameManager.Instance.LoadNextLevel();
+            }
+            
+            if (!_startingToPull)
+            {
+                if (_colliding)
+                {
+                    if (Input.GetMouseButtonDown(0) && _playerMarble.CanShoot)
+                    {
+                        StartPulling();
+                        return;
+                    }
                 }
                 
                 Vector3 mousePosition = Input.mousePosition;
@@ -55,22 +91,29 @@ namespace SparuvianConnection.Adoptatron.Gameplay
                     UpdatePullDirection();
                 }
             }
+
+
+#endif
+            
         }
 
-        private void OnTriggerStay2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
-                if (_playerMarble.CanShoot)
-                {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        StartPulling();
-                    }
-                }
+                _colliding = true;
             }
-            
         }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                _colliding = false;
+            }
+        }
+        
+        
 
         private void ReleaseBall()
         {
@@ -86,8 +129,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             _playerMarble.StopMarbleMovement();
             
             _startingToPull = true;
+#if UNITY_ANDROID
+            _startingPullPositionInScreenCoordinates = Input.touches[0].position;
+#else
             _startingPullPositionInScreenCoordinates = Input.mousePosition;
-
+#endif
             Vector3 startingPullPosition = _cameraMain.ScreenToWorldPoint(_startingPullPositionInScreenCoordinates);
             startingPullPosition.z = 0;
             
@@ -96,7 +142,12 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private void UpdatePullDirection()
         {
+            _playerMarble.StopMarbleMovement();
+#if UNITY_ANDROID
+            _pullDirectionInScreenCoordinates = _startingPullPositionInScreenCoordinates - (Vector2) Input.touches[0].position;
+#else
             _pullDirectionInScreenCoordinates = _startingPullPositionInScreenCoordinates - (Vector2) Input.mousePosition;
+#endif
 
             _pullDirection = Vector2.ClampMagnitude(vector: ScreenUtils.ScreenToWorldVector(_pullDirectionInScreenCoordinates), maxLength: maxPullDistance);
             

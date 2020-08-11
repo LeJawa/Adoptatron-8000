@@ -36,7 +36,6 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private GameManager()
         {
             _currentDog = new Dog();
-            FindGameObjectsInScene();
             
             _levelManager = new LevelManager(1, _currentDog);
 
@@ -57,6 +56,13 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public void StartGameplay()
         {
             _levelManager.LoadLevel(1);
+        }
+        
+        
+
+        public void LoadNextLevel()
+        {
+            _levelManager.LoadNextLevel();
         }
 
         public void FindGameObjectsInScene()
@@ -92,6 +98,9 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public void Initialize()
         {
             if (_initialized) return;
+            
+            FindGameObjectsInScene();
+            _levelManager.Initialize();
 
             _initialized = true;
         }

@@ -68,6 +68,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         public void StartRecording()
         {
             _recording = true;
+            RecordPositions();
         }
 
         public void StopRecording()

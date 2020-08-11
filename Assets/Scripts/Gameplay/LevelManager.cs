@@ -16,8 +16,10 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         private const int StartingCombo = 1;
         private int _numberOfCollisionsInThisRound = 0;
 
-        private const int TotalNumberOfTries = 1000;
+        private int _totalNumberOfTries = 1000;
         private int _currentNumberOfTries = 0;
+
+        public int ShotsLeft => _totalNumberOfTries - _currentNumberOfTries;
 
         private Dog _currentDog;
         
@@ -27,7 +29,10 @@ namespace SparuvianConnection.Adoptatron.Gameplay
         
         private RewindManager _rewindManager;
 
-        private DateTime _levelTimer = new DateTime();
+        private DateTime _levelTimer = DateTime.Now;
+
+        private LevelData _levelData;
+        private bool _initialized = false;
 
         public int Level { get; private set; }
 
@@ -37,13 +42,8 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             Level = level;
             _currentDog = currentDog;
             _currentNumberOfTries = 0;
-            
-            FindGameObjectsInScene();
 
             SubscribeToEvents();
-
-            ResetCombo();
-            UpdateAllHUDs();
         }
 
         private void FindGameObjectsInScene()
@@ -64,6 +64,11 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         public void RewindLevel()
         {
+            _currentNumberOfTries = 0;
+            _totalNumberOfTries++;
+            _playerMarble.CanShootAgain();
+            UpdateShotsLeftHUD();
+            
             _currentDog.AddRewindCount();
             _rewindManager.StartRewind();
         }
@@ -74,13 +79,13 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             
             GameEvents.Instance.TriggerAllMarblesStopEvent();
 
-            CalculateTimeSpentInLevel();
-
-
+            _levelData = Resources.Load<LevelData>(@"Levels\level" + level);
+            _totalNumberOfTries = _levelData.numberOfShots;
+            
             CoroutineHelper.Instance.StartCoroutine(LoadLevelCoroutine(level));
         }
 
-        private void CalculateTimeSpentInLevel()
+        private void CalculateTimeSpent()
         {
             var timeNow = DateTime.Now;
 
@@ -125,13 +130,17 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             _currentNumberOfTries++;
             ResetCombo();
             UpdateComboHUD();
+            UpdateShotsLeftHUD();
             
-            if (_currentNumberOfTries >= TotalNumberOfTries)
+            if (ShotsLeft <= 0)
             {
                 _playerMarble.CannotShootAnymore();
             }
+        }
 
-            _levelTimer = DateTime.Now;
+        private void UpdateShotsLeftHUD()
+        {
+            _hud.ChangeShotsLeftTo(ShotsLeft);
         }
 
         private void ResetCombo()
@@ -182,14 +191,19 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             _hud.ChangeSkillMasteryTo(skillName, _currentDog.GetMasteryOfSkill(skillName));
         }
 
-        private void UpdateSitSkillHUD()
+        private void UpdatePatienceSkillHUD()
         {
-            UpdateHUDOfSkill(SkillName.Sit);
+            UpdateHUDOfSkill(SkillName.Patience);
         }
 
-        private void UpdateComeSkillHUD()
+        private void UpdateMPatienceSkillHUD()
         {
-            UpdateHUDOfSkill(SkillName.Come);
+            UpdateHUDOfSkill(SkillName.MPatience);
+        }
+
+        private void UpdateEMPatienceSkillHUD()
+        {
+            UpdateHUDOfSkill(SkillName.EMPatience);
         }
 
         private void UpdateComboHUD()
@@ -199,14 +213,16 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         private void UpdateAllHUDs()
         {
-            UpdateSitSkillHUD();
-            UpdateComeSkillHUD();
+            UpdatePatienceSkillHUD();
+            UpdateMPatienceSkillHUD();
+            UpdateEMPatienceSkillHUD();
             UpdateComboHUD();
+            UpdateShotsLeftHUD();
         }
 
         private void HandleSkillPowerUpActivated(SkillName skillName)
         {
-            if (skillName == SkillName.Sit)
+            if ( skillName == SkillName.Patience || skillName == SkillName.MPatience || skillName == SkillName.EMPatience )
             {
                 GameEvents.Instance.TriggerAllMarblesStopEvent();
             }
@@ -214,7 +230,7 @@ namespace SparuvianConnection.Adoptatron.Gameplay
 
         public void EndGame()
         {
-            CalculateTimeSpentInLevel();
+            CalculateTimeSpent();
             
             CoroutineHelper.Instance.StartCoroutine(EndGameCoroutine());
         }
@@ -233,6 +249,18 @@ namespace SparuvianConnection.Adoptatron.Gameplay
             SceneManager.LoadScene("Scenes/EndDialogue");
 
 
+        }
+
+        public void Initialize()
+        {
+            if (_initialized) return;
+            
+            FindGameObjectsInScene();
+
+            ResetCombo();
+            UpdateAllHUDs();
+
+            _initialized = true;
         }
     }
 }
